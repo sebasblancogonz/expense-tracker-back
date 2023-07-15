@@ -1,0 +1,6 @@
+rootProject.name = 'WorkoutTracker'
+include 'domain'
+include 'infrastructure'
+include 'application'
+include 'untitled'
+
