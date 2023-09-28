@@ -1,6 +1,8 @@
 package com.ducky.expensetracker.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -9,6 +11,7 @@ public class Expense {
     private String id;
     private String description;
     private BigDecimal amount;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate paymentDate;
 
     public Expense() {

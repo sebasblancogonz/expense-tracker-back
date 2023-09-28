@@ -1,6 +1,6 @@
 package com.ducky.expensetracker.configuration;
 
-import com.ducky.expensetracker.WorkoutTrackerApplication;
+import com.ducky.expensetracker.ExpenseTrackerApplication;
 import com.ducky.expensetracker.repository.ExpenseRepository;
 import com.ducky.expensetracker.service.ExpenseService;
 import com.ducky.expensetracker.service.impl.ExpenseServiceImpl;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackageClasses = WorkoutTrackerApplication.class)
+@ComponentScan(basePackageClasses = ExpenseTrackerApplication.class)
 public class BeanConfiguration {
 
     @Bean
