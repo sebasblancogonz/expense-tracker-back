@@ -1,6 +1,6 @@
-package com.ducky.workouttracker.request;
+package com.ducky.expensetracker.request;
 
-import com.ducky.workouttracker.model.User;
+import com.ducky.expensetracker.model.Expense;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +9,9 @@ import org.springframework.lang.NonNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+public class ExpenseRequest {
 
     @NonNull
-    private User user;
+    private Expense expense;
 
 }

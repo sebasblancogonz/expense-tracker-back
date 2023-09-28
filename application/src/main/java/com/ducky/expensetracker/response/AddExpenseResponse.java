@@ -1,4 +1,4 @@
-package com.ducky.workouttracker.response;
+package com.ducky.expensetracker.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserResponse {
+public class AddExpenseResponse {
 
     String id;
 
