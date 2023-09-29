@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SpringDataMongoUserRepository extends MongoRepository<Expense, String> {
+public interface MongoExpenseRepository extends MongoRepository<Expense, String> {
 
     Expense findByDescription(String description);
 

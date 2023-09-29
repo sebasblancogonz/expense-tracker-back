@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDate;
 
 @Data
@@ -17,10 +17,12 @@ public class Expense {
     String id;
 
     private String description;
-    private BigDecimal amount;
+    private double amount;
     private LocalDate paymentDate;
+    private boolean isLoan;
 
-    public Expense(String id, String description, BigDecimal amount, LocalDate paymentDate) {
+
+    public Expense(String id, String description, double amount, LocalDate paymentDate) {
         super();
         this.id = id;
         this.description = description;

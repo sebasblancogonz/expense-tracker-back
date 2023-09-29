@@ -25,8 +25,8 @@ public class ExpenseController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<AddExpenseResponse> addExpense(@RequestBody final ExpenseRequest expenseRequest) {
-        final String userId = expenseService.addExpense(expenseRequest.getExpense());
-       return ResponseEntity.ok(AddExpenseResponse.builder().id(userId).build());
+        final String expenseId = expenseService.addExpense(expenseRequest.getExpense());
+       return ResponseEntity.ok(AddExpenseResponse.builder().id(expenseId).build());
     }
 
     @GetMapping(value = "/{expenseId}", produces = MediaType.APPLICATION_JSON_VALUE)

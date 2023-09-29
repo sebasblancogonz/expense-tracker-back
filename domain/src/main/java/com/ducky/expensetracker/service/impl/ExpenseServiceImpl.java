@@ -4,8 +4,7 @@ import com.ducky.expensetracker.model.Expense;
 import com.ducky.expensetracker.repository.ExpenseRepository;
 import com.ducky.expensetracker.service.ExpenseService;
 
-public record ExpenseServiceImpl(
-        ExpenseRepository expenseRepository) implements ExpenseService {
+public record ExpenseServiceImpl(ExpenseRepository expenseRepository) implements ExpenseService {
 
     @Override
     public String addExpense(Expense expense) {

@@ -3,26 +3,29 @@ package com.ducky.expensetracker.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDate;
 
 public class Expense {
 
     private String id;
     private String description;
-    private BigDecimal amount;
+    private double amount;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate paymentDate;
+    private Installment installment;
 
     public Expense() {
 
     }
 
-    public Expense(String id, String description, BigDecimal amount, LocalDate paymentDate) {
+    public Expense(String id, String description, double amount, LocalDate paymentDate,
+                   Installment installment) {
         this.id = id;
         this.description = description;
         this.amount = amount;
         this.paymentDate = paymentDate;
+        this.installment = installment;
     }
 
     public String getDescription() {
@@ -41,11 +44,11 @@ public class Expense {
         this.id = id;
     }
 
-    public BigDecimal getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -55,5 +58,13 @@ public class Expense {
 
     public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public Installment getRecurringDetails() {
+        return installment;
+    }
+
+    public void setRecurringDetails(Installment installment) {
+        this.installment = installment;
     }
 }

@@ -12,10 +12,10 @@ import java.util.Optional;
 @Primary
 public class MongoDbExpenseRepository implements ExpenseRepository {
 
-    private final SpringDataMongoUserRepository repository;
+    private final MongoExpenseRepository repository;
     private final ExpenseMapper expenseMapper;
 
-    public MongoDbExpenseRepository(final SpringDataMongoUserRepository repository, final ExpenseMapper expenseMapper) {
+    public MongoDbExpenseRepository(final MongoExpenseRepository repository, final ExpenseMapper expenseMapper) {
         this.repository = repository;
         this.expenseMapper = expenseMapper;
     }
