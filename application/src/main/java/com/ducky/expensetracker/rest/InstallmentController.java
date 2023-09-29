@@ -4,7 +4,7 @@ import com.ducky.expensetracker.model.Installment;
 import com.ducky.expensetracker.request.InstallmentRequest;
 import com.ducky.expensetracker.request.InstallmentsRequest;
 import com.ducky.expensetracker.response.AddInstallmentResponse;
-import com.ducky.expensetracker.response.AddInstallmentsResponse;
+import com.ducky.expensetracker.response.AddBulkInstallmentsResponse;
 import com.ducky.expensetracker.service.InstallmentService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +34,9 @@ public class InstallmentController {
     }
 
     @PostMapping(path = "/bulk", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<AddInstallmentsResponse> addInstallments(@RequestBody final InstallmentsRequest installmentsRequest) {
+    ResponseEntity<AddBulkInstallmentsResponse> addInstallments(@RequestBody final InstallmentsRequest installmentsRequest) {
         final List<String> installmentIds = installmentService.addInstallments(installmentsRequest.getInstallments());
-        return ResponseEntity.ok(AddInstallmentsResponse.builder().ids(installmentIds).build());
+        return ResponseEntity.ok(AddBulkInstallmentsResponse.builder().ids(installmentIds).build());
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,6 +47,11 @@ public class InstallmentController {
     @GetMapping(value = "/{installmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     Installment searchInstallment(@PathVariable final String installmentId) {
         return installmentService.searchInstallment(installmentId);
+    }
+
+    @GetMapping(path = "/total/monthly", produces = MediaType.APPLICATION_JSON_VALUE)
+    Double getMonthlyTotal() {
+        return installmentService.getMonthlyTotal();
     }
 
 }

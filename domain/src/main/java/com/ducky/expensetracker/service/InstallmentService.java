@@ -14,6 +14,8 @@ public interface InstallmentService {
 
     List<Installment> getAllInstallments();
 
+    Double getMonthlyTotal();
+
     Installment updateInstallment(Installment expense);
 
 }

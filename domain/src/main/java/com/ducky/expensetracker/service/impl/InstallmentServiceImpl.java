@@ -4,6 +4,8 @@ import com.ducky.expensetracker.model.Installment;
 import com.ducky.expensetracker.repository.InstallmentRepository;
 import com.ducky.expensetracker.service.InstallmentService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
@@ -34,6 +36,14 @@ public record InstallmentServiceImpl(InstallmentRepository installmentRepository
     }
 
     @Override
+    public Double getMonthlyTotal() {
+        return getDoubleWithTwoDecimals(installmentRepository.getAllInstallments()
+                .stream()
+                .map(Installment::getMonthlyAmount)
+                .reduce(0.0, Double::sum));
+    }
+
+    @Override
     public Installment updateInstallment(Installment expense) {
         return null;
     }
@@ -42,7 +52,7 @@ public record InstallmentServiceImpl(InstallmentRepository installmentRepository
     private void calculateRemainingData(Installment installment) {
         LocalDate finishDate = installment.getFinishDate();
         installment.setRemainingInstallments(calculateRemainingInstallments(finishDate));
-        installment.setRemainingAmount(calculateRemainingAmount(installment));
+        installment.setRemainingAmount(getDoubleWithTwoDecimals(calculateRemainingAmount(installment)));
     }
 
     private Integer calculateRemainingInstallments(LocalDate finishDate) {
@@ -63,6 +73,11 @@ public record InstallmentServiceImpl(InstallmentRepository installmentRepository
 
     private static int getMonthsBetween(LocalDate start, LocalDate end) {
         return (int) ChronoUnit.MONTHS.between(YearMonth.from(start), YearMonth.from(end));
+    }
+
+    private double getDoubleWithTwoDecimals(double value) {
+        return BigDecimal.valueOf(value)
+                .setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
 }
