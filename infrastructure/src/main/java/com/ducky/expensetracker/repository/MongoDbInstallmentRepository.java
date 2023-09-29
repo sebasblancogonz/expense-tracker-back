@@ -1,14 +1,14 @@
 package com.ducky.expensetracker.repository;
 
 
-import com.ducky.expensetracker.mapper.ExpenseMapper;
+import com.ducky.expensetracker.entity.Installment;
 import com.ducky.expensetracker.mapper.InstallmentsMapper;
-import com.ducky.expensetracker.model.Expense;
-import com.ducky.expensetracker.model.Installment;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @Primary
@@ -23,19 +23,30 @@ public class MongoDbInstallmentRepository implements InstallmentRepository {
     }
 
     @Override
-    public Installment searchInstallment(String installmentId) {
-        Optional<com.ducky.expensetracker.entity.Installment> installmentEntity = repository.findById(installmentId);
+    public com.ducky.expensetracker.model.Installment searchInstallment(String installmentId) {
+        Optional<Installment> installmentEntity = repository.findById(installmentId);
         return installmentEntity.map(installmentsMapper::toModel).orElse(null);
     }
 
     @Override
-    public String addInstallment(Installment expense) {
-        com.ducky.expensetracker.entity.Installment expenseEntity = installmentsMapper.toEntity(expense);
+    public List<com.ducky.expensetracker.model.Installment> getAllInstallments() {
+        return installmentsMapper.toModelList(repository.findAll());
+    }
+
+    @Override
+    public String addInstallment(com.ducky.expensetracker.model.Installment expense) {
+        Installment expenseEntity = installmentsMapper.toEntity(expense);
         return repository.save(expenseEntity).getId();
     }
 
     @Override
-    public Installment modifyInstallment(Installment installment) {
+    public List<String> addInstallments(List<com.ducky.expensetracker.model.Installment> installments) {
+        List<Installment> installmentEntities = installmentsMapper.toEntityList(installments);
+        return repository.saveAll(installmentEntities).stream().map(Installment::getId).toList();
+    }
+
+    @Override
+    public com.ducky.expensetracker.model.Installment modifyInstallment(com.ducky.expensetracker.model.Installment installment) {
         return null;
     }
 }

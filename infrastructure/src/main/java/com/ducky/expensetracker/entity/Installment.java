@@ -16,7 +16,6 @@ public class Installment {
     @Id
     private String id;
     private String description;
-    private String expenseId;
     private LocalDate startDate;
     private LocalDate finishDate;
     private Integer remainingInstallments;
@@ -25,11 +24,10 @@ public class Installment {
     private double remainingAmount;
     private double totalAmount;
 
-    public Installment(String expenseId, LocalDate startDate, LocalDate finishDate, Integer remainingInstallments,
+    public Installment(LocalDate startDate, LocalDate finishDate, Integer remainingInstallments,
                        Double interest, double monthlyAmount, double remainingAmount, String description,
                        double totalAmount) {
         super();
-        this.expenseId = expenseId;
         this.description = description;
         this.startDate = startDate;
         this.finishDate = finishDate;

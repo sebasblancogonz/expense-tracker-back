@@ -60,11 +60,4 @@ public class Expense {
         this.paymentDate = paymentDate;
     }
 
-    public Installment getRecurringDetails() {
-        return installment;
-    }
-
-    public void setRecurringDetails(Installment installment) {
-        this.installment = installment;
-    }
 }

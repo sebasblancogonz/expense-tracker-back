@@ -2,7 +2,9 @@ package com.ducky.expensetracker.rest;
 
 import com.ducky.expensetracker.model.Installment;
 import com.ducky.expensetracker.request.InstallmentRequest;
+import com.ducky.expensetracker.request.InstallmentsRequest;
 import com.ducky.expensetracker.response.AddInstallmentResponse;
+import com.ducky.expensetracker.response.AddInstallmentsResponse;
 import com.ducky.expensetracker.service.InstallmentService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/installments")
@@ -24,9 +28,20 @@ public class InstallmentController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<AddInstallmentResponse> addExpense(@RequestBody final InstallmentRequest installmentRequest) {
+    ResponseEntity<AddInstallmentResponse> addInstallment(@RequestBody final InstallmentRequest installmentRequest) {
         final String installmentId = installmentService.addInstallment(installmentRequest.getInstallment());
         return ResponseEntity.ok(AddInstallmentResponse.builder().id(installmentId).build());
+    }
+
+    @PostMapping(path = "/bulk", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<AddInstallmentsResponse> addInstallments(@RequestBody final InstallmentsRequest installmentsRequest) {
+        final List<String> installmentIds = installmentService.addInstallments(installmentsRequest.getInstallments());
+        return ResponseEntity.ok(AddInstallmentsResponse.builder().ids(installmentIds).build());
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Installment> getAllInstallments() {
+        return installmentService.getAllInstallments();
     }
 
     @GetMapping(value = "/{installmentId}", produces = MediaType.APPLICATION_JSON_VALUE)

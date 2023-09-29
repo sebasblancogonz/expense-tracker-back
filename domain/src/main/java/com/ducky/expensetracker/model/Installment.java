@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 public class Installment {
 
+    private String id;
     private Integer remainingInstallments;
     private String description;
     private Double interest;
@@ -21,9 +22,10 @@ public class Installment {
     public Installment() {
     }
 
-    public Installment(Integer remainingInstallments, String description, Double interest, LocalDate startDate,
+    public Installment(String id, Integer remainingInstallments, String description, Double interest, LocalDate startDate,
                        LocalDate finishDate, double monthlyAmount, double remainingAmount,
                        double totalAmount) {
+
         this.remainingInstallments = remainingInstallments;
         this.description = description;
         this.interest = interest;
@@ -97,5 +99,13 @@ public class Installment {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

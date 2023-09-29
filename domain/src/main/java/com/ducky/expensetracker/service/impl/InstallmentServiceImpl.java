@@ -4,11 +4,10 @@ import com.ducky.expensetracker.model.Installment;
 import com.ducky.expensetracker.repository.InstallmentRepository;
 import com.ducky.expensetracker.service.InstallmentService;
 
-
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public record InstallmentServiceImpl(InstallmentRepository installmentRepository) implements InstallmentService {
 
@@ -19,8 +18,19 @@ public record InstallmentServiceImpl(InstallmentRepository installmentRepository
     }
 
     @Override
+    public List<String> addInstallments(List<Installment> installments) {
+        installments.forEach(this::calculateRemainingData);
+        return installmentRepository.addInstallments(installments);
+    }
+
+    @Override
     public Installment searchInstallment(String installmentId) {
         return installmentRepository.searchInstallment(installmentId);
+    }
+
+    @Override
+    public List<Installment> getAllInstallments() {
+        return installmentRepository.getAllInstallments();
     }
 
     @Override
@@ -36,7 +46,7 @@ public record InstallmentServiceImpl(InstallmentRepository installmentRepository
     }
 
     private Integer calculateRemainingInstallments(LocalDate finishDate) {
-        return getMonthsBetween(LocalDate.now(), finishDate) + 1;
+        return getMonthsBetween(LocalDate.now(), finishDate);
     }
 
     private double calculateRemainingAmount(Installment installment) {
@@ -48,7 +58,7 @@ public record InstallmentServiceImpl(InstallmentRepository installmentRepository
     }
 
     private static int getMonthsPaid(LocalDate startDate) {
-        return getMonthsBetween(startDate, LocalDate.now()) + 1;
+        return getMonthsBetween(startDate, LocalDate.now());
     }
 
     private static int getMonthsBetween(LocalDate start, LocalDate end) {

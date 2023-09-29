@@ -19,7 +19,6 @@ public class Expense {
     private String description;
     private double amount;
     private LocalDate paymentDate;
-    private boolean isLoan;
 
 
     public Expense(String id, String description, double amount, LocalDate paymentDate) {
