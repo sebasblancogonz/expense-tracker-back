@@ -37,25 +37,31 @@ public record InstallmentServiceImpl(InstallmentRepository installmentRepository
 
     @Override
     public Double getMonthlyTotal() {
-        return getDoubleWithTwoDecimals(installmentRepository.getAllInstallments()
-                .stream()
-                .map(Installment::getMonthlyAmount)
-                .reduce(0.0, Double::sum));
+        return getDoubleWithTwoDecimals(calculateMonthlyTotal());
     }
 
     @Override
-    public Installment updateInstallment(Installment expense) {
-        return null;
+    public Installment updateInstallment(Installment installment, String installmentId) {
+        calculateRemainingData(installment);
+        return installmentRepository.modifyInstallment(installment, installmentId);
     }
 
+    private double calculateMonthlyTotal() {
+        return installmentRepository.getAllInstallments()
+                .stream()
+                .mapToDouble(Installment::getMonthlyAmount)
+                .sum();
+    }
 
     private void calculateRemainingData(Installment installment) {
         LocalDate finishDate = installment.getFinishDate();
-        installment.setRemainingInstallments(calculateRemainingInstallments(finishDate));
-        installment.setRemainingAmount(getDoubleWithTwoDecimals(calculateRemainingAmount(installment)));
+        int remainingInstallments = calculateRemainingInstallments(finishDate);
+        double remainingAmount = calculateRemainingAmount(installment);
+        installment.setRemainingInstallments(remainingInstallments);
+        installment.setRemainingAmount(getDoubleWithTwoDecimals(remainingAmount));
     }
 
-    private Integer calculateRemainingInstallments(LocalDate finishDate) {
+    private int calculateRemainingInstallments(LocalDate finishDate) {
         return getMonthsBetween(LocalDate.now(), finishDate);
     }
 
@@ -64,7 +70,7 @@ public record InstallmentServiceImpl(InstallmentRepository installmentRepository
     }
 
     private double getAmountPaid(double installmentAmount, LocalDate startDate) {
-        return  getMonthsPaid(startDate) * installmentAmount;
+        return getMonthsPaid(startDate) * installmentAmount;
     }
 
     private static int getMonthsPaid(LocalDate startDate) {

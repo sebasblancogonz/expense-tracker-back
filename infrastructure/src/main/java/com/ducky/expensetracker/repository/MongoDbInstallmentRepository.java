@@ -5,10 +5,14 @@ import com.ducky.expensetracker.entity.Installment;
 import com.ducky.expensetracker.mapper.InstallmentsMapper;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.function.Consumer;
+import java.util.function.DoubleConsumer;
+import java.util.function.IntConsumer;
 
 @Component
 @Primary
@@ -46,7 +50,52 @@ public class MongoDbInstallmentRepository implements InstallmentRepository {
     }
 
     @Override
-    public com.ducky.expensetracker.model.Installment modifyInstallment(com.ducky.expensetracker.model.Installment installment) {
-        return null;
+    public com.ducky.expensetracker.model.Installment modifyInstallment(com.ducky.expensetracker.model.Installment installment,
+                                                                        String installmentId) {
+        Optional<Installment> oldInstallment = repository.findById(installmentId);
+        Optional<Installment> updatedInstallment = updateInstallment(installment, oldInstallment);
+        return updatedInstallment.map(repository::save).map(installmentsMapper::toModel).orElse(null);
+    }
+
+
+    public static Optional<Installment> updateInstallment(com.ducky.expensetracker.model.Installment newInstallment, Optional<Installment> oldInstallment) {
+        return oldInstallment.map(installment -> {
+            Installment updatedInstallment = new Installment();
+
+            updateIfNotNull(newInstallment.getDescription(), updatedInstallment::setDescription);
+            updateIfNonZero(newInstallment.getRemainingInstallments(), updatedInstallment::setRemainingInstallments);
+            updateIfNonZero(newInstallment.getRemainingAmount(), updatedInstallment::setRemainingAmount);
+            updateIfNonZero(newInstallment.getInterest(), updatedInstallment::setInterest);
+            updateIfNotNull(newInstallment.getFinishDate(), updatedInstallment::setFinishDate);
+            updateIfNotNull(newInstallment.getStartDate(), updatedInstallment::setStartDate);
+            updateIfNonZero(newInstallment.getMonthlyAmount(), updatedInstallment::setMonthlyAmount);
+            updateIfNonZero(newInstallment.getTotalAmount(), updatedInstallment::setTotalAmount);
+
+            return updatedInstallment;
+        });
+    }
+
+    private static void updateIfNotNull(LocalDate value, Consumer<LocalDate> setter) {
+        if (value != null) {
+            setter.accept(value);
+        }
+    }
+
+    private static void updateIfNonZero(double value, DoubleConsumer setter) {
+        if (value != 0) {
+            setter.accept(value);
+        }
+    }
+
+    private static void updateIfNonZero(Integer value, IntConsumer setter) {
+        if (value != 0) {
+            setter.accept(value);
+        }
+    }
+
+    private static void updateIfNotNull(String value, Consumer<String> setter) {
+        if (StringUtils.hasText(value)) {
+            setter.accept(value);
+        }
     }
 }

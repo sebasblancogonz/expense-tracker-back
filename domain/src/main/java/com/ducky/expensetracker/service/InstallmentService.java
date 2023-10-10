@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface InstallmentService {
 
-    String addInstallment(Installment expense);
+    String addInstallment(Installment installment);
 
-    List<String> addInstallments(List<Installment> expense);
+    List<String> addInstallments(List<Installment> installments);
 
     Installment searchInstallment(String userId);
 
@@ -16,6 +16,6 @@ public interface InstallmentService {
 
     Double getMonthlyTotal();
 
-    Installment updateInstallment(Installment expense);
+    Installment updateInstallment(Installment installment, String installmentId);
 
 }

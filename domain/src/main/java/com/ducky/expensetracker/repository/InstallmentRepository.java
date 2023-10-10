@@ -14,6 +14,6 @@ public interface InstallmentRepository {
 
     List<String> addInstallments(List<Installment> installments);
 
-    Installment modifyInstallment(Installment installment);
+    Installment modifyInstallment(Installment installment, String installmentId);
 
 }

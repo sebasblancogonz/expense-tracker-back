@@ -2,13 +2,14 @@ package com.ducky.expensetracker.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 
 import java.time.LocalDate;
 
 @Data
+@SuperBuilder
 @Document("installments")
 @NoArgsConstructor
 public class Installment {
@@ -37,4 +38,5 @@ public class Installment {
         this.remainingAmount = remainingAmount;
         this.totalAmount = totalAmount;
     }
+
 }

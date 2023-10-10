@@ -5,10 +5,12 @@ import com.ducky.expensetracker.request.InstallmentRequest;
 import com.ducky.expensetracker.request.InstallmentsRequest;
 import com.ducky.expensetracker.response.AddInstallmentResponse;
 import com.ducky.expensetracker.response.AddBulkInstallmentsResponse;
+import com.ducky.expensetracker.response.ModifyInstallmentResponse;
 import com.ducky.expensetracker.service.InstallmentService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +39,14 @@ public class InstallmentController {
     ResponseEntity<AddBulkInstallmentsResponse> addInstallments(@RequestBody final InstallmentsRequest installmentsRequest) {
         final List<String> installmentIds = installmentService.addInstallments(installmentsRequest.getInstallments());
         return ResponseEntity.ok(AddBulkInstallmentsResponse.builder().ids(installmentIds).build());
+    }
+
+    @PatchMapping(path = "/{installmentId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<ModifyInstallmentResponse> modifyInstallment(@RequestBody final InstallmentRequest installmentRequest,
+                                                                @PathVariable final String installmentId) {
+        final Installment updatedInstallment = installmentService.updateInstallment(installmentRequest.getInstallment(),
+                installmentId);
+        return ResponseEntity.ok(ModifyInstallmentResponse.builder().updatedInstallment(updatedInstallment).build());
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
