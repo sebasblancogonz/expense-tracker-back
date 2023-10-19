@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Expense {
 
@@ -13,19 +14,16 @@ public class Expense {
     private double amount;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate paymentDate;
-    private Installment installment;
 
     public Expense() {
 
     }
 
-    public Expense(String id, String description, double amount, LocalDate paymentDate,
-                   Installment installment) {
+    public Expense(String id, String description, double amount, LocalDate paymentDate) {
         this.id = id;
         this.description = description;
         this.amount = amount;
         this.paymentDate = paymentDate;
-        this.installment = installment;
     }
 
     public String getDescription() {

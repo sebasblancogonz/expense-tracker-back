@@ -1,6 +1,6 @@
 package com.ducky.expensetracker.request;
 
-import com.ducky.expensetracker.model.Installment;
+import com.ducky.expensetracker.model.Loan;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +11,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InstallmentsRequest {
+public class LoansRequest {
 
     @NonNull
-    private List<Installment> installments;
+    private List<Loan> loans;
 
 }

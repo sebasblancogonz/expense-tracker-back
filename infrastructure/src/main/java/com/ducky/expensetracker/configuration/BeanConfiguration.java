@@ -2,11 +2,11 @@ package com.ducky.expensetracker.configuration;
 
 import com.ducky.expensetracker.ExpenseTrackerApplication;
 import com.ducky.expensetracker.repository.ExpenseRepository;
-import com.ducky.expensetracker.repository.InstallmentRepository;
+import com.ducky.expensetracker.repository.LoanRepository;
 import com.ducky.expensetracker.service.ExpenseService;
-import com.ducky.expensetracker.service.InstallmentService;
+import com.ducky.expensetracker.service.LoanService;
 import com.ducky.expensetracker.service.impl.ExpenseServiceImpl;
-import com.ducky.expensetracker.service.impl.InstallmentServiceImpl;
+import com.ducky.expensetracker.service.impl.LoanServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +21,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    InstallmentService installmentService(final InstallmentRepository installmentRepository) {
-        return new InstallmentServiceImpl(installmentRepository);
+    LoanService installmentService(final LoanRepository loanRepository) {
+        return new LoanServiceImpl(loanRepository);
     }
 
 }

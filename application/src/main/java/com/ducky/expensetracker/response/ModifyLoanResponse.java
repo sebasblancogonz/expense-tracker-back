@@ -1,6 +1,6 @@
 package com.ducky.expensetracker.response;
 
-import com.ducky.expensetracker.model.Installment;
+import com.ducky.expensetracker.model.Loan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModifyInstallmentResponse {
+public class ModifyLoanResponse {
 
-    private Installment updatedInstallment;
+    private Loan updatedLoan;
 
 }

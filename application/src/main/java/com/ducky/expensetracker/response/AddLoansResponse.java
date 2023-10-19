@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddBulkInstallmentsResponse {
+public class AddLoansResponse {
 
     List<String> ids;
 

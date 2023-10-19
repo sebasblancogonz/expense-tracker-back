@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddInstallmentResponse {
+public class AddLoanResponse {
 
     String id;
 

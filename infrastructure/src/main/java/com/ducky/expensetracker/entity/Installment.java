@@ -3,9 +3,9 @@ package com.ducky.expensetracker.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -14,29 +14,26 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Installment {
 
-    @Id
     private String id;
-    private String description;
-    private LocalDate startDate;
-    private LocalDate finishDate;
+    private LocalDate date;
+    private BigDecimal amount;
+    private BigDecimal interest;
+    private BigDecimal redeemed;
+    private BigDecimal totalRedeemed;
+    private BigDecimal remainingAmount;
     private Integer remainingInstallments;
-    private Double interest;
-    private double monthlyAmount;
-    private double remainingAmount;
-    private double totalAmount;
 
-    public Installment(LocalDate startDate, LocalDate finishDate, Integer remainingInstallments,
-                       Double interest, double monthlyAmount, double remainingAmount, String description,
-                       double totalAmount) {
+    public Installment(LocalDate date, Integer remainingInstallments,
+                       BigDecimal interest, BigDecimal amount,
+                       BigDecimal totalRedeemed, BigDecimal remainingAmount, BigDecimal redeemed) {
         super();
-        this.description = description;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
+        this.date = date;
         this.remainingInstallments = remainingInstallments;
         this.interest = interest;
-        this.monthlyAmount = monthlyAmount;
+        this.amount = amount;
+        this.redeemed = redeemed;
+        this.totalRedeemed = totalRedeemed;
         this.remainingAmount = remainingAmount;
-        this.totalAmount = totalAmount;
     }
 
 }

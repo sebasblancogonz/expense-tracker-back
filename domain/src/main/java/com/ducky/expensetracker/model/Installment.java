@@ -2,38 +2,82 @@ package com.ducky.expensetracker.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Installment {
 
     private String id;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate date;
+    private BigDecimal amount;
+    private BigDecimal interest;
+    private BigDecimal redeemed;
+    private BigDecimal totalRedeemed;
     private Integer remainingInstallments;
-    private String description;
-    private Double interest;
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate startDate;
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate finishDate;
-    private double monthlyAmount;
-    private double remainingAmount;
-    private double totalAmount;
+    private BigDecimal remainingAmount;
 
     public Installment() {
     }
 
-    public Installment(String id, Integer remainingInstallments, String description, Double interest, LocalDate startDate,
-                       LocalDate finishDate, double monthlyAmount, double remainingAmount,
-                       double totalAmount) {
-
-        this.remainingInstallments = remainingInstallments;
-        this.description = description;
+    public Installment(String id, LocalDate date, BigDecimal amount, BigDecimal interest, BigDecimal redeemed,
+                       BigDecimal totalRedeemed, Integer remainingInstallments, BigDecimal remainingAmount) {
+        this.id = id;
+        this.date = date;
+        this.amount = amount;
         this.interest = interest;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
-        this.monthlyAmount = monthlyAmount;
+        this.redeemed = redeemed;
+        this.totalRedeemed = totalRedeemed;
+        this.remainingInstallments = remainingInstallments;
         this.remainingAmount = remainingAmount;
-        this.totalAmount = totalAmount;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public BigDecimal getInterest() {
+        return interest;
+    }
+
+    public void setInterest(BigDecimal interest) {
+        this.interest = interest;
+    }
+
+    public BigDecimal getRedeemed() {
+        return redeemed;
+    }
+
+    public void setRedeemed(BigDecimal redeemed) {
+        this.redeemed = redeemed;
+    }
+
+    public BigDecimal getTotalRedeemed() {
+        return totalRedeemed;
+    }
+
+    public void setTotalRedeemed(BigDecimal totalRedeemed) {
+        this.totalRedeemed = totalRedeemed;
     }
 
     public Integer getRemainingInstallments() {
@@ -44,68 +88,11 @@ public class Installment {
         this.remainingInstallments = remainingInstallments;
     }
 
-    public Double getInterest() {
-        return interest;
-    }
-
-    public void setInterest(Double interest) {
-        this.interest = interest;
-    }
-
-    public LocalDate getFinishDate() {
-        return finishDate;
-    }
-
-    public void setFinishDate(LocalDate finishDate) {
-        this.finishDate = finishDate;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-
-    public double getMonthlyAmount() {
-        return monthlyAmount;
-    }
-
-    public void setMonthlyAmount(double monthlyAmount) {
-        this.monthlyAmount = monthlyAmount;
-    }
-
-    public double getRemainingAmount() {
+    public BigDecimal getRemainingAmount() {
         return remainingAmount;
     }
 
-    public void setRemainingAmount(double remainingAmount) {
+    public void setRemainingAmount(BigDecimal remainingAmount) {
         this.remainingAmount = remainingAmount;
-    }
-
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }
