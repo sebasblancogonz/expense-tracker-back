@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 public class Installment {
 
-    private String id;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate date;
     private BigDecimal amount;
@@ -20,9 +19,8 @@ public class Installment {
     public Installment() {
     }
 
-    public Installment(String id, LocalDate date, BigDecimal amount, BigDecimal interest, BigDecimal redeemed,
+    public Installment(LocalDate date, BigDecimal amount, BigDecimal interest, BigDecimal redeemed,
                        BigDecimal totalRedeemed, Integer remainingInstallments, BigDecimal remainingAmount) {
-        this.id = id;
         this.date = date;
         this.amount = amount;
         this.interest = interest;
@@ -30,14 +28,6 @@ public class Installment {
         this.totalRedeemed = totalRedeemed;
         this.remainingInstallments = remainingInstallments;
         this.remainingAmount = remainingAmount;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public LocalDate getDate() {

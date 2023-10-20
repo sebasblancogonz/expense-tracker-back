@@ -10,11 +10,9 @@ import java.time.LocalDate;
 
 @Data
 @SuperBuilder
-@Document("installments")
 @NoArgsConstructor
 public class Installment {
 
-    private String id;
     private LocalDate date;
     private BigDecimal amount;
     private BigDecimal interest;
