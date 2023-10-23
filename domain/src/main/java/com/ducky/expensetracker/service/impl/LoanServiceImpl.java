@@ -8,11 +8,13 @@ import com.ducky.expensetracker.service.LoanService;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public record LoanServiceImpl(LoanRepository loanRepository) implements LoanService {
 
@@ -74,6 +76,7 @@ public record LoanServiceImpl(LoanRepository loanRepository) implements LoanServ
         BigDecimal monthlyInterest = calculateMonthlyInterest(loan);
         BigDecimal monthlyAmount = loan.getMonthlyAmount();
         BigDecimal interestTotalAmount = BigDecimal.ZERO;
+        BigDecimal totalRedeemed = BigDecimal.ZERO;
 
         List<Installment> installments = new ArrayList<>();
         for (LocalDate date = startDate.plusMonths(1); date.isBefore(finishDate); date = date.plusMonths(1)) {
@@ -101,9 +104,13 @@ public record LoanServiceImpl(LoanRepository loanRepository) implements LoanServ
             installment.setRemainingInstallments(remainingInstallments);
             installment.setRemainingAmount(scaleTo2Decimals(remainingAmount));
             installments.add(installment);
+            if (date.isBefore(LocalDate.now()) || date.isEqual(LocalDate.now())) {
+                totalRedeemed = totalRedeemed.add(redeemedAmount);
+            }
             interestTotalAmount = interestTotalAmount.add(interestAmount);
         }
         loan.setInterestTotalAmount(scaleTo2Decimals(interestTotalAmount));
+        loan.setTotalRedeemed(scaleTo2Decimals(totalRedeemed));
         return installments;
     }
 
@@ -119,18 +126,14 @@ public record LoanServiceImpl(LoanRepository loanRepository) implements LoanServ
         int totalInstallments = getMonthsBetween(loan.getStartDate(), loan.getFinishDate());
         BigDecimal onePlusMonthlyInterest = BigDecimal.ONE.add(monthlyInterest);
 
-        // Calculate (1 + monthlyInterest)^totalInstallments
         BigDecimal powOnePlusMonthlyInterest = onePlusMonthlyInterest.pow(totalInstallments);
 
-        // Calculate denominator: (1 + monthlyInterest)^totalInstallments - 1
         BigDecimal denominator = powOnePlusMonthlyInterest.subtract(BigDecimal.ONE);
 
-        // Calculate numerator: loan.getTotalAmount() * monthlyInterest * (1 + monthlyInterest)^totalInstallments
         BigDecimal numerator = loan.getTotalAmount()
                 .multiply(monthlyInterest)
                 .multiply(powOnePlusMonthlyInterest);
 
-        // Calculate the result: numerator / denominator
         return numerator.divide(denominator, MathContext.DECIMAL128);
 
     }
