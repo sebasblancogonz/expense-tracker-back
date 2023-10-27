@@ -51,29 +51,29 @@ public class MongoDbLoanRepository implements LoanRepository {
 
     @Override
     public com.ducky.expensetracker.model.Loan updateLoan(com.ducky.expensetracker.model.Loan loan,
-                                                                        String installmentId) {
-        Optional<Loan> oldInstallment = repository.findById(installmentId);
-        Optional<Loan> updatedInstallment = updateLoan(loansMapper.toEntity(loan), oldInstallment);
-        return updatedInstallment.map(repository::save).map(loansMapper::toModel).orElse(null);
+                                                                        String loanId) {
+        Optional<Loan> oldLoan = repository.findById(loanId);
+        Optional<Loan> updatedLoan = updateLoan(loansMapper.toEntity(loan), oldLoan);
+        return updatedLoan.map(repository::save).map(loansMapper::toModel).orElse(null);
     }
 
 
-    public static Optional<Loan> updateLoan(Loan newInstallment, Optional<Loan> oldInstallment) {
-        return oldInstallment.map(loan -> {
-            Loan updatedInstallment = new Loan();
+    private static Optional<Loan> updateLoan(Loan newLoan, Optional<Loan> oldLoan) {
+        return oldLoan.map(loan -> {
+            Loan updatedLoan = new Loan();
+            updatedLoan.setId(loan.getId());
+            updateIfNotNull(newLoan.getDescription(), updatedLoan::setDescription);
+            updateIfNotNull(newLoan.getStartDate(), updatedLoan::setStartDate);
+            updateIfNotNull(newLoan.getFinishDate(), updatedLoan::setFinishDate);
+            updateIfNonZero(newLoan.getInterest(), updatedLoan::setInterest);
+            updateIfNonZero(newLoan.getTotalAmount(), updatedLoan::setTotalAmount);
+            updateIfNonZero(newLoan.getInterestTotalAmount(), updatedLoan::setInterestTotalAmount);
+            updateIfNonZero(newLoan.getMonthlyAmount(), updatedLoan::setMonthlyAmount);
+            updateIfNonZero(newLoan.getTotalRedeemed(), updatedLoan::setTotalRedeemed);
+            updateIfNonZero(newLoan.getRemainingInstallments(), updatedLoan::setRemainingInstallments);
+            updateIfNotEmpty(newLoan.getInstallments(), updatedLoan::setInstallments);
 
-            updateIfNotNull(newInstallment.getDescription(), updatedInstallment::setDescription);
-            updateIfNotNull(newInstallment.getStartDate(), updatedInstallment::setStartDate);
-            updateIfNotNull(newInstallment.getFinishDate(), updatedInstallment::setFinishDate);
-            updateIfNonZero(newInstallment.getInterest(), updatedInstallment::setInterest);
-            updateIfNonZero(newInstallment.getTotalAmount(), updatedInstallment::setTotalAmount);
-            updateIfNonZero(newInstallment.getInterestTotalAmount(), updatedInstallment::setInterestTotalAmount);
-            updateIfNonZero(newInstallment.getMonthlyAmount(), updatedInstallment::setMonthlyAmount);
-            updateIfNonZero(newInstallment.getTotalRedeemed(), updatedInstallment::setTotalRedeemed);
-            updateIfNonZero(newInstallment.getRemainingInstallments(), updatedInstallment::setRemainingInstallments);
-            updateIfNotEmpty(newInstallment.getInstallments(), updatedInstallment::setInstallments);
-
-            return updatedInstallment;
+            return updatedLoan;
         });
     }
 

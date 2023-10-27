@@ -8,13 +8,11 @@ import com.ducky.expensetracker.service.LoanService;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public record LoanServiceImpl(LoanRepository loanRepository) implements LoanService {
 
