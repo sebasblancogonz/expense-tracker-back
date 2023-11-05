@@ -1,14 +1,15 @@
 package com.ducky.expensetracker.rest;
 
 import com.ducky.expensetracker.model.Loan;
-import com.ducky.expensetracker.request.LoansRequest;
 import com.ducky.expensetracker.request.LoanRequest;
-import com.ducky.expensetracker.response.AddLoansResponse;
+import com.ducky.expensetracker.request.LoansRequest;
 import com.ducky.expensetracker.response.AddLoanResponse;
+import com.ducky.expensetracker.response.AddLoansResponse;
 import com.ducky.expensetracker.response.ModifyLoanResponse;
 import com.ducky.expensetracker.service.LoanService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/loans")
 public class LoanController {

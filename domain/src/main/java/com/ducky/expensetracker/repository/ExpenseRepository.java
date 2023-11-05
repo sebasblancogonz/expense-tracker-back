@@ -8,6 +8,8 @@ public interface ExpenseRepository {
 
     String addExpense(Expense expense);
 
+    String addExpenseForToday(Expense expense);
+
     Expense modifyExpense(Expense expense);
 
 }

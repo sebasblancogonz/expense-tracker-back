@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/expenses")
 public class ExpenseController {
@@ -27,6 +29,14 @@ public class ExpenseController {
     ResponseEntity<AddExpenseResponse> addExpense(@RequestBody final ExpenseRequest expenseRequest) {
         final String expenseId = expenseService.addExpense(expenseRequest.getExpense());
        return ResponseEntity.ok(AddExpenseResponse.builder().id(expenseId).build());
+    }
+
+    @PostMapping(value = "/today", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<AddExpenseResponse> addExpenseForToday(@RequestBody final ExpenseRequest expenseRequest) {
+        final Expense expense = expenseRequest.getExpense();
+        expense.setPaymentDate(LocalDate.now());
+        final String expenseId = expenseService.addExpense(expenseRequest.getExpense());
+        return ResponseEntity.ok(AddExpenseResponse.builder().id(expenseId).build());
     }
 
     @GetMapping(value = "/{expenseId}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -6,6 +6,7 @@ import com.ducky.expensetracker.model.Expense;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Component
@@ -29,6 +30,13 @@ public class MongoDbExpenseRepository implements ExpenseRepository {
     @Override
     public String addExpense(Expense expense) {
         com.ducky.expensetracker.entity.Expense expenseEntity = expenseMapper.toEntity(expense);
+        return repository.save(expenseEntity).getId();
+    }
+
+    @Override
+    public String addExpenseForToday(Expense expense) {
+        com.ducky.expensetracker.entity.Expense expenseEntity = expenseMapper.toEntity(expense);
+        expenseEntity.setPaymentDate(LocalDate.now());
         return repository.save(expenseEntity).getId();
     }
 
