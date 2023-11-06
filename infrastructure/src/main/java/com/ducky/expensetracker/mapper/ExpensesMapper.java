@@ -4,7 +4,7 @@ import com.ducky.expensetracker.entity.Expense;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface ExpenseMapper {
+public interface ExpensesMapper {
 
     Expense toEntity(com.ducky.expensetracker.model.Expense expenseModel);
 

@@ -1,7 +1,7 @@
 package com.ducky.expensetracker.repository;
 
 
-import com.ducky.expensetracker.mapper.ExpenseMapper;
+import com.ducky.expensetracker.mapper.ExpensesMapper;
 import com.ducky.expensetracker.model.Expense;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -14,29 +14,22 @@ import java.util.Optional;
 public class MongoDbExpenseRepository implements ExpenseRepository {
 
     private final MongoExpenseRepository repository;
-    private final ExpenseMapper expenseMapper;
+    private final ExpensesMapper expensesMapper;
 
-    public MongoDbExpenseRepository(final MongoExpenseRepository repository, final ExpenseMapper expenseMapper) {
+    public MongoDbExpenseRepository(final MongoExpenseRepository repository, final ExpensesMapper expensesMapper) {
         this.repository = repository;
-        this.expenseMapper = expenseMapper;
+        this.expensesMapper = expensesMapper;
     }
 
     @Override
     public Expense searchExpense(String expenseId) {
         Optional<com.ducky.expensetracker.entity.Expense> userEntity = repository.findById(expenseId);
-        return userEntity.map(expenseMapper::toModel).orElse(null);
+        return userEntity.map(expensesMapper::toModel).orElse(null);
     }
 
     @Override
     public String addExpense(Expense expense) {
-        com.ducky.expensetracker.entity.Expense expenseEntity = expenseMapper.toEntity(expense);
-        return repository.save(expenseEntity).getId();
-    }
-
-    @Override
-    public String addExpenseForToday(Expense expense) {
-        com.ducky.expensetracker.entity.Expense expenseEntity = expenseMapper.toEntity(expense);
-        expenseEntity.setPaymentDate(LocalDate.now());
+        com.ducky.expensetracker.entity.Expense expenseEntity = expensesMapper.toEntity(expense);
         return repository.save(expenseEntity).getId();
     }
 
