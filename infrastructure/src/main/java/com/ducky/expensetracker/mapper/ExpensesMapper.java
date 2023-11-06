@@ -10,5 +10,4 @@ public interface ExpensesMapper {
 
     com.ducky.expensetracker.model.Expense toModel(Expense expenseEntity);
 
-
 }
