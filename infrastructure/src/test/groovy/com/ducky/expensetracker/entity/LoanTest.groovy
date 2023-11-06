@@ -24,14 +24,14 @@ class LoanTest extends Specification {
         def loan = new Loan(startDate, finishDate, interest, monthlyAmount, description, totalAmount, interestTotalAmount, installments)
 
         then:
-        loan.description == description
-        loan.startDate == startDate
-        loan.finishDate == finishDate
-        loan.interest == interest
-        loan.totalAmount == totalAmount
-        loan.interestTotalAmount == interestTotalAmount
-        loan.monthlyAmount == monthlyAmount
-        loan.installments == installments
+        assert loan.description == description
+        assert loan.startDate == startDate
+        assert loan.finishDate == finishDate
+        assert loan.interest == interest
+        assert loan.totalAmount == totalAmount
+        assert loan.interestTotalAmount == interestTotalAmount
+        assert loan.monthlyAmount == monthlyAmount
+        assert loan.installments == installments
     }
 
 }

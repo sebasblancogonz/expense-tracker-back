@@ -22,13 +22,13 @@ class InstallmentTest extends Specification {
                 remainingAmount, redeemed)
 
         then:
-        installment.date == date
-        installment.amount == amount
-        installment.interest == interest
-        installment.redeemed == redeemed
-        installment.totalRedeemed == totalRedeemed
-        installment.remainingAmount == remainingAmount
-        installment.remainingInstallments == remainingInstallments
+        assert installment.date == date
+        assert installment.amount == amount
+        assert installment.interest == interest
+        assert installment.redeemed == redeemed
+        assert installment.totalRedeemed == totalRedeemed
+        assert installment.remainingAmount == remainingAmount
+        assert installment.remainingInstallments == remainingInstallments
     }
 
 }

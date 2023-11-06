@@ -17,9 +17,9 @@ class ExpenseTest extends Specification {
         def expense = new Expense(description, amount, date)
 
         then:
-        expense.amount == amount
-        expense.description == description
-        expense.paymentDate == date
+        assert expense.amount == amount
+        assert expense.description == description
+        assert expense.paymentDate == date
     }
 
 }
