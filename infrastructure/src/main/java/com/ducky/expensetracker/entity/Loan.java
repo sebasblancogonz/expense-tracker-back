@@ -25,11 +25,11 @@ public class Loan {
     private BigDecimal monthlyAmount;
     private BigDecimal totalRedeemed;
     private Integer remainingInstallments;
-    List<Installment> installments;
+    private List<Installment> installments;
 
     public Loan(LocalDate startDate, LocalDate finishDate,
                 BigDecimal interest, BigDecimal monthlyAmount, String description,
-                BigDecimal totalAmount, BigDecimal interestTotalAmount) {
+                BigDecimal totalAmount, BigDecimal interestTotalAmount, List<Installment> installments) {
         super();
         this.description = description;
         this.startDate = startDate;
@@ -38,6 +38,7 @@ public class Loan {
         this.monthlyAmount = monthlyAmount;
         this.totalAmount = totalAmount;
         this.interestTotalAmount = interestTotalAmount;
+        this.installments = installments;
     }
 
 }

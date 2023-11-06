@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
 import java.time.LocalDate;
 
 @Data
@@ -14,16 +13,14 @@ import java.time.LocalDate;
 public class Expense {
 
     @Id
-    String id;
-
+    private String id;
     private String description;
     private double amount;
     private LocalDate paymentDate;
 
 
-    public Expense(String id, String description, double amount, LocalDate paymentDate) {
+    public Expense(String description, double amount, LocalDate paymentDate) {
         super();
-        this.id = id;
         this.description = description;
         this.amount = amount;
         this.paymentDate = paymentDate;
