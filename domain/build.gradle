@@ -2,6 +2,12 @@ plugins {
     id 'groovy'
 }
 
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.9"
+}
+
 
 repositories {
     mavenCentral()
