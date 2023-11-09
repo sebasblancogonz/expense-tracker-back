@@ -21,7 +21,6 @@ class ExpensesMapperTest extends Specification {
         def result = expensesMapper.toEntity(expenses)
 
         then:
-        assert result.id == expenses.id
         assert result.amount == expenses.amount
         assert result.description == expenses.description
         assert result.paymentDate == expenses.paymentDate
@@ -35,15 +34,27 @@ class ExpensesMapperTest extends Specification {
         def result = expensesMapper.toModel(expenses)
 
         then:
-        assert result.id == expenses.id
         assert result.amount == expenses.amount
         assert result.description == expenses.description
         assert result.paymentDate == expenses.paymentDate
     }
 
+    def "ToModelList"() {
+        given:
+        def expenses = [buildExpenseEntity()]
+
+        when:
+        def result = expensesMapper.toModelList(expenses)
+
+        then:
+        assert result.size() == 1
+        assert result[0].amount == expenses[0].amount
+        assert result[0].description == expenses[0].description
+        assert result[0].paymentDate == expenses[0].paymentDate
+    }
+
     def buildExpenseModel() {
         Expense expense = new Expense()
-        expense.id = 1
         expense.amount = 100
         expense.description = "Test"
         expense.paymentDate = LocalDate.of(2020, 1, 1)

@@ -4,14 +4,15 @@ package com.ducky.expensetracker.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 public class Expense {
 
-    private String id;
     private String description;
-    private double amount;
+    private BigDecimal amount;
+    private ExpenseCategory category;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate paymentDate;
 
@@ -19,11 +20,11 @@ public class Expense {
 
     }
 
-    public Expense(String id, String description, double amount, LocalDate paymentDate) {
-        this.id = id;
+    public Expense(String description, BigDecimal amount, LocalDate paymentDate, ExpenseCategory category) {
         this.description = description;
         this.amount = amount;
         this.paymentDate = paymentDate;
+        this.category = category;
     }
 
     public String getDescription() {
@@ -34,19 +35,11 @@ public class Expense {
         this.description = description;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -56,6 +49,14 @@ public class Expense {
 
     public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public ExpenseCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ExpenseCategory category) {
+        this.category = category;
     }
 
 }

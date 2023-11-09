@@ -5,6 +5,7 @@ import com.ducky.expensetracker.repository.ExpenseRepository
 import spock.lang.Specification
 
 import java.time.LocalDate
+import java.time.LocalTime
 
 class ExpenseServiceImplTest extends Specification {
 
@@ -51,6 +52,23 @@ class ExpenseServiceImplTest extends Specification {
 
         then: "The expense is returned"
         assert expense == null
+    }
+
+    def "GetWastedOnCurrentMonth"() {
+        given: "An stored expense"
+        Expense expense = buildExpenseRequest()
+        expense.paymentDate = LocalDate.now()
+        List<Expense> expenses = [expense]
+        BigDecimal expectedAmount = expense.amount
+        LocalDate startDate = LocalDate.now().withDayOfMonth(1)
+        LocalDate endDate = LocalDate.now().atTime(LocalTime.MAX).toLocalDate()
+
+        when: "calculate expenses to current date is called"
+        BigDecimal amount = expenseService.calculateExpensesToCurrentDate()
+
+        then: "The amount is the expected"
+        1 * expenseRepository.searchAllExpensesBetweenDates(startDate, endDate) >> expenses
+        assert amount == expectedAmount
     }
 
     def buildExpenseRequest() {

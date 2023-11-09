@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -36,5 +37,11 @@ public class MongoDbExpenseRepository implements ExpenseRepository {
     @Override
     public Expense modifyExpense(Expense expense) {
         return null;
+    }
+
+    @Override
+    public List<Expense> searchAllExpensesBetweenDates(LocalDate startDate, LocalDate endDate) {
+        List<com.ducky.expensetracker.entity.Expense> expenses = repository.findAllByPaymentDateBetween(startDate, endDate);
+        return expensesMapper.toModelList(expenses);
     }
 }

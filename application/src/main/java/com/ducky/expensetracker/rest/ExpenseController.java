@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @RestController
@@ -42,5 +43,10 @@ public class ExpenseController {
     @GetMapping(value = "/{expenseId}", produces = MediaType.APPLICATION_JSON_VALUE)
     Expense searchUser(@PathVariable final String expenseId) {
         return expenseService.searchExpense(expenseId);
+    }
+
+    @GetMapping(value = "/total-current-month", produces = MediaType.APPLICATION_JSON_VALUE)
+    BigDecimal searchUser() {
+        return expenseService.calculateExpensesToCurrentDate();
     }
 }
