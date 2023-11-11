@@ -71,14 +71,6 @@ class ExpenseServiceImplTest extends Specification {
         assert amount == expectedAmount
     }
 
-    def buildExpenseRequest() {
-        Expense expense = new Expense()
-        expense.description = "Test Expense"
-        expense.amount = 1000
-        expense.paymentDate = LocalDate.of(2023, 1, 1)
-        return expense
-    }
-
     def "should return all the expenses for the current month"() {
         given: "An stored expense"
         Expense expense = buildExpenseRequest()
@@ -88,11 +80,36 @@ class ExpenseServiceImplTest extends Specification {
         LocalDate endDate = LocalDate.now().atTime(LocalTime.MAX).toLocalDate()
 
         when: "search all expenses is called"
-        List<Expense> expensesResult = expenseService.getCurrentMonthExpenses()
+        List<Expense> expensesResult = expenseService.getExpensesToCurrentDate()
 
         then: "The amount is the expected"
         1 * expenseRepository.searchAllExpensesBetweenDates(startDate, endDate) >> expenses
         assert expensesResult.size() == 1
+    }
+
+    def "should return the total expended in the current month by category"() {
+        given: "An stored expense"
+        Expense expense = buildExpenseRequest()
+        expense.paymentDate = LocalDate.now()
+        List<Expense> expenses = [expense]
+        LocalDate startDate = LocalDate.now().withDayOfMonth(1)
+        LocalDate endDate = LocalDate.now().atTime(LocalTime.MAX).toLocalDate()
+        String category = "Test Category"
+
+        when: "search all expenses is called"
+        BigDecimal categoryAmount = expenseService.calculateExpensesToCurrentDateByCategory(category)
+
+        then: "The amount is the expected"
+        1 * expenseRepository.searchAllExpensesBetweenDates(startDate, endDate) >> expenses
+        assert  categoryAmount == expense.amount
+    }
+
+    def buildExpenseRequest() {
+        Expense expense = new Expense()
+        expense.description = "Test Expense"
+        expense.amount = 1000
+        expense.paymentDate = LocalDate.of(2023, 1, 1)
+        return expense
     }
 
 }
