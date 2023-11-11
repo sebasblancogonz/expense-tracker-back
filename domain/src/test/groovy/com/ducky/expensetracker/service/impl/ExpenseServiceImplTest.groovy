@@ -79,4 +79,20 @@ class ExpenseServiceImplTest extends Specification {
         return expense
     }
 
+    def "should return all the expenses for the current month"() {
+        given: "An stored expense"
+        Expense expense = buildExpenseRequest()
+        expense.paymentDate = LocalDate.now()
+        List<Expense> expenses = [expense]
+        LocalDate startDate = LocalDate.now().withDayOfMonth(1)
+        LocalDate endDate = LocalDate.now().atTime(LocalTime.MAX).toLocalDate()
+
+        when: "search all expenses is called"
+        List<Expense> expensesResult = expenseService.getCurrentMonthExpenses()
+
+        then: "The amount is the expected"
+        1 * expenseRepository.searchAllExpensesBetweenDates(startDate, endDate) >> expenses
+        assert expensesResult.size() == 1
+    }
+
 }
