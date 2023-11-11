@@ -17,4 +17,6 @@ public interface ExpenseService {
 
     List<Expense> getExpensesToCurrentDate();
 
+    BigDecimal calculateExpensesToCurrentDateByCategory(String category);
+
 }

@@ -1,6 +1,7 @@
 package com.ducky.expensetracker.service.impl
 
 import com.ducky.expensetracker.model.Expense
+import com.ducky.expensetracker.model.ExpenseCategory
 import com.ducky.expensetracker.repository.ExpenseRepository
 import spock.lang.Specification
 
@@ -94,13 +95,14 @@ class ExpenseServiceImplTest extends Specification {
         List<Expense> expenses = [expense]
         LocalDate startDate = LocalDate.now().withDayOfMonth(1)
         LocalDate endDate = LocalDate.now().atTime(LocalTime.MAX).toLocalDate()
-        String category = "Test Category"
+        String category = "FOOD"
+        ExpenseCategory expenseCategory = ExpenseCategory.valueOf(category)
 
         when: "search all expenses is called"
         BigDecimal categoryAmount = expenseService.calculateExpensesToCurrentDateByCategory(category)
 
         then: "The amount is the expected"
-        1 * expenseRepository.searchAllExpensesBetweenDates(startDate, endDate) >> expenses
+        1 * expenseRepository.searchAllExpensesBetweenDatesByCategory(startDate, endDate, expenseCategory) >> expenses
         assert  categoryAmount == expense.amount
     }
 
@@ -109,6 +111,7 @@ class ExpenseServiceImplTest extends Specification {
         expense.description = "Test Expense"
         expense.amount = 1000
         expense.paymentDate = LocalDate.of(2023, 1, 1)
+        expense.category = "FOOD"
         return expense
     }
 

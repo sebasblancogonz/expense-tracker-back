@@ -1,8 +1,10 @@
 package com.ducky.expensetracker.service.impl;
 
 import com.ducky.expensetracker.model.Expense;
+import com.ducky.expensetracker.model.ExpenseCategory;
 import com.ducky.expensetracker.repository.ExpenseRepository;
 import com.ducky.expensetracker.service.ExpenseService;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -39,9 +41,25 @@ public record ExpenseServiceImpl(ExpenseRepository expenseRepository) implements
         return getExpensesCurrentMonth();
     }
 
+    @Override
+    public BigDecimal calculateExpensesToCurrentDateByCategory(String category) {
+        Pair<LocalDate, LocalDate> dates = getCurrentMonthDates();
+        ExpenseCategory expenseCategory = ExpenseCategory.valueOf(category);
+        return expenseRepository.searchAllExpensesBetweenDatesByCategory(dates.getLeft(), dates.getRight(), expenseCategory)
+                .stream()
+                .filter(expense -> expense.getCategory().name().equals(category))
+                .map(Expense::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
     private List<Expense> getExpensesCurrentMonth() {
-        return expenseRepository.searchAllExpensesBetweenDates(LocalDate.now().withDayOfMonth(1),
-                LocalDate.now().atTime(LocalTime.MAX).toLocalDate());
+        Pair<LocalDate, LocalDate> dates = getCurrentMonthDates();
+        return expenseRepository.searchAllExpensesBetweenDates(dates.getLeft(),
+                dates.getRight());
+    }
+
+    private Pair<LocalDate, LocalDate> getCurrentMonthDates() {
+        return Pair.of(LocalDate.now().withDayOfMonth(1), LocalDate.now().atTime(LocalTime.MAX).toLocalDate());
     }
 
 }

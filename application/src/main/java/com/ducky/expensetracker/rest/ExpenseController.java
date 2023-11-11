@@ -52,6 +52,11 @@ public class ExpenseController {
         return expenseService.calculateExpensesToCurrentDate();
     }
 
+    @GetMapping(value = "/total-current-month/{category}", produces = MediaType.APPLICATION_JSON_VALUE)
+    BigDecimal totalCurrentMonthByCategory(@PathVariable final String category) {
+        return expenseService.calculateExpensesToCurrentDateByCategory(category);
+    }
+
     @GetMapping(value = "/expenses-current-month/", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<GetExpensesResponse> getExpensesCurrentMonth() {
         final List<Expense> expenses = expenseService.getExpensesToCurrentDate();

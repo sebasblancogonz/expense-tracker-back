@@ -3,6 +3,7 @@ package com.ducky.expensetracker.repository;
 
 import com.ducky.expensetracker.mapper.ExpensesMapper;
 import com.ducky.expensetracker.model.Expense;
+import com.ducky.expensetracker.model.ExpenseCategory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +43,13 @@ public class MongoDbExpenseRepository implements ExpenseRepository {
     @Override
     public List<Expense> searchAllExpensesBetweenDates(LocalDate startDate, LocalDate endDate) {
         List<com.ducky.expensetracker.entity.Expense> expenses = repository.findAllByPaymentDateBetween(startDate, endDate);
+        return expensesMapper.toModelList(expenses);
+    }
+
+    @Override
+    public List<Expense> searchAllExpensesBetweenDatesByCategory(LocalDate startDate, LocalDate endDate, ExpenseCategory category) {
+        com.ducky.expensetracker.entity.ExpenseCategory expenseCategory = com.ducky.expensetracker.entity.ExpenseCategory.valueOf(category.name());
+        List<com.ducky.expensetracker.entity.Expense> expenses = repository.findAllByPaymentDateBetweenAndCategory(startDate, endDate, expenseCategory);
         return expensesMapper.toModelList(expenses);
     }
 
