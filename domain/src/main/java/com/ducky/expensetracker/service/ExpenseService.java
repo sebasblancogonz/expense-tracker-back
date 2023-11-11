@@ -3,6 +3,7 @@ package com.ducky.expensetracker.service;
 import com.ducky.expensetracker.model.Expense;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface ExpenseService {
 
@@ -13,5 +14,7 @@ public interface ExpenseService {
     Expense updateExpense(Expense expense);
 
     BigDecimal calculateExpensesToCurrentDate();
+
+    List<Expense> getExpensesToCurrentDate();
 
 }

@@ -7,6 +7,7 @@ import com.ducky.expensetracker.service.ExpenseService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public record ExpenseServiceImpl(ExpenseRepository expenseRepository) implements ExpenseService {
 
@@ -27,11 +28,20 @@ public record ExpenseServiceImpl(ExpenseRepository expenseRepository) implements
 
     @Override
     public BigDecimal calculateExpensesToCurrentDate() {
-        return expenseRepository.searchAllExpensesBetweenDates(LocalDate.now().withDayOfMonth(1),
-                        LocalDate.now().atTime(LocalTime.MAX).toLocalDate())
+        return getExpensesCurrentMonth()
                 .stream()
                 .map(Expense::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @Override
+    public List<Expense> getExpensesToCurrentDate() {
+        return getExpensesCurrentMonth();
+    }
+
+    private List<Expense> getExpensesCurrentMonth() {
+        return expenseRepository.searchAllExpensesBetweenDates(LocalDate.now().withDayOfMonth(1),
+                LocalDate.now().atTime(LocalTime.MAX).toLocalDate());
     }
 
 }

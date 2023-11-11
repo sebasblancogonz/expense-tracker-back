@@ -3,6 +3,7 @@ package com.ducky.expensetracker.rest;
 import com.ducky.expensetracker.model.Expense;
 import com.ducky.expensetracker.request.ExpenseRequest;
 import com.ducky.expensetracker.response.AddExpenseResponse;
+import com.ducky.expensetracker.response.GetExpensesResponse;
 import com.ducky.expensetracker.service.ExpenseService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/expenses")
@@ -48,6 +50,12 @@ public class ExpenseController {
     @GetMapping(value = "/total-current-month", produces = MediaType.APPLICATION_JSON_VALUE)
     BigDecimal searchUser() {
         return expenseService.calculateExpensesToCurrentDate();
+    }
+
+    @GetMapping(value = "/expenses-current-month/", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<GetExpensesResponse> getExpensesCurrentMonth() {
+        final List<Expense> expenses = expenseService.getExpensesToCurrentDate();
+        return ResponseEntity.ok(GetExpensesResponse.builder().expenses(expenses).build());
     }
 
 }
