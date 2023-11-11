@@ -33,4 +33,5 @@ public record ExpenseServiceImpl(ExpenseRepository expenseRepository) implements
                 .map(Expense::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
 }

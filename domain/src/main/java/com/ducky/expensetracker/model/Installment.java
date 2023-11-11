@@ -85,4 +85,5 @@ public class Installment {
     public void setRemainingAmount(BigDecimal remainingAmount) {
         this.remainingAmount = remainingAmount;
     }
+
 }

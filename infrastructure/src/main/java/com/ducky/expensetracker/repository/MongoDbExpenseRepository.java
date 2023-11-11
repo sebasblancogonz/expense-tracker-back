@@ -44,4 +44,5 @@ public class MongoDbExpenseRepository implements ExpenseRepository {
         List<com.ducky.expensetracker.entity.Expense> expenses = repository.findAllByPaymentDateBetween(startDate, endDate);
         return expensesMapper.toModelList(expenses);
     }
+
 }

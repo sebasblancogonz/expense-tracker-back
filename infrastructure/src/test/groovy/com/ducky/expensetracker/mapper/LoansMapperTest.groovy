@@ -123,4 +123,5 @@ class LoansMapperTest extends Specification {
         installment.date = LocalDate.of(2020, 1, 1)
         return installment
     }
+
 }

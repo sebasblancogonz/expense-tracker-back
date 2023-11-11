@@ -128,4 +128,5 @@ public class Loan {
     public void setRemainingInstallments(Integer remainingInstallments) {
         this.remainingInstallments = remainingInstallments;
     }
+
 }

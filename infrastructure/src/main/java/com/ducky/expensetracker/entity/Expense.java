@@ -27,4 +27,5 @@ public class Expense {
         this.amount = amount;
         this.paymentDate = paymentDate;
     }
+
 }

@@ -49,4 +49,5 @@ public class ExpenseController {
     BigDecimal searchUser() {
         return expenseService.calculateExpensesToCurrentDate();
     }
+
 }

@@ -7,4 +7,5 @@ public enum ExpenseCategory {
     HEALTH,
     EDUCATION,
     OTHERS;
+
 }

@@ -69,4 +69,5 @@ class ExpensesMapperTest extends Specification {
         expense.paymentDate = LocalDate.of(2020, 1, 1)
         return expense
     }
+
 }

@@ -140,4 +140,5 @@ class LoanServiceImplTest extends Specification {
         installment.setDate(date)
         return installment
     }
+
 }

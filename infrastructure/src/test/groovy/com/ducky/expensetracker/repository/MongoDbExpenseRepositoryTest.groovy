@@ -80,4 +80,5 @@ class MongoDbExpenseRepositoryTest extends Specification {
         expenseEntity.paymentDate = LocalDate.of(2023, 1, 1)
         return expenseEntity
     }
+
 }

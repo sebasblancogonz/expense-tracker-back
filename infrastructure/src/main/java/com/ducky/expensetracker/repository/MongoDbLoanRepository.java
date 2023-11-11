@@ -106,4 +106,5 @@ public class MongoDbLoanRepository implements LoanRepository {
             setter.accept(value);
         }
     }
+
 }
