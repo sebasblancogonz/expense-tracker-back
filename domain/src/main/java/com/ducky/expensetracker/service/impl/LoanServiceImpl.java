@@ -14,7 +14,13 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public record LoanServiceImpl(LoanRepository loanRepository) implements LoanService {
+public final class LoanServiceImpl implements LoanService {
+
+    private final LoanRepository loanRepository;
+
+    public LoanServiceImpl(LoanRepository loanRepository) {
+        this.loanRepository = loanRepository;
+    }
 
     @Override
     public String addLoan(Loan loan) {

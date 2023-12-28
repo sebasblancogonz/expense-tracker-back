@@ -11,7 +11,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public record ExpenseServiceImpl(ExpenseRepository expenseRepository) implements ExpenseService {
+public final class ExpenseServiceImpl implements ExpenseService {
+
+    private final ExpenseRepository expenseRepository;
+
+    public ExpenseServiceImpl(final ExpenseRepository expenseRepository) {
+        this.expenseRepository = expenseRepository;
+    }
 
     @Override
     public String addExpense(Expense expense) {
