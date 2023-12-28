@@ -1,17 +1,32 @@
 package com.ducky.expensetracker.request;
 
-import com.ducky.expensetracker.model.Loan;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoanRequest {
 
-    @NonNull
-    private Loan loan;
+    @NotBlank(message = "Provide a valid loan description")
+    private String description;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "The loan start date is mandatory")
+    private LocalDate startDate;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "The loan end date is mandatory")
+    private LocalDate finishDate;
+
+    @NotNull(message = "The loan interest is mandatory")
+    private BigDecimal interest;
 
 }

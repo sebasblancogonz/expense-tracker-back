@@ -1,10 +1,9 @@
 package com.ducky.expensetracker.request;
 
-import com.ducky.expensetracker.model.Loan;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class LoansRequest {
 
-    @NonNull
-    private List<Loan> loans;
+    @NotEmpty(message = "Provide a valid list of loans")
+    private List<LoanRequest> loans;
 
 }
