@@ -30,6 +30,11 @@ public class MongoDbExpenseRepository implements ExpenseRepository {
     }
 
     @Override
+    public List<Expense> getAllExpenses() {
+        return expensesMapper.toModelList(repository.findAll());
+    }
+
+    @Override
     public String addExpense(Expense expense) {
         com.ducky.expensetracker.entity.Expense expenseEntity = expensesMapper.toEntity(expense);
         return repository.save(expenseEntity).getId();

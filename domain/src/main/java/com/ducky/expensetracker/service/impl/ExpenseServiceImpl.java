@@ -25,6 +25,11 @@ public final class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
+    public List<Expense> getAllExpenses() {
+        return expenseRepository.getAllExpenses();
+    }
+
+    @Override
     public Expense searchExpense(String expenseId) {
         return expenseRepository.searchExpense(expenseId);
     }

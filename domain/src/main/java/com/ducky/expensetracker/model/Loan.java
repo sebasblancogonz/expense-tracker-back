@@ -25,20 +25,26 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(String id, String description, BigDecimal interest, BigDecimal monthlyAmount,
-                BigDecimal totalAmount, LocalDate startDate, LocalDate finishDate, List<Installment> installments,
-                BigDecimal interestTotalAmount, BigDecimal totalRedeemed, Integer remainingInstallments) {
+    public Loan(String id, String description, LocalDate startDate, LocalDate finishDate, BigDecimal interest, BigDecimal totalAmount, BigDecimal interestTotalAmount, BigDecimal monthlyAmount, BigDecimal totalRedeemed, Integer remainingInstallments, List<Installment> installments) {
         this.id = id;
         this.description = description;
-        this.interest = interest;
-        this.monthlyAmount = monthlyAmount;
-        this.totalAmount = totalAmount;
         this.startDate = startDate;
         this.finishDate = finishDate;
-        this.installments = installments;
+        this.interest = interest;
+        this.totalAmount = totalAmount;
         this.interestTotalAmount = interestTotalAmount;
+        this.monthlyAmount = monthlyAmount;
         this.totalRedeemed = totalRedeemed;
         this.remainingInstallments = remainingInstallments;
+        this.installments = installments;
+    }
+
+    public Loan(String description, LocalDate startDate, LocalDate finishDate, BigDecimal interest, BigDecimal totalAmount) {
+        this.description = description;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.interest = interest;
+        this.totalAmount = totalAmount;
     }
 
     public String getDescription() {

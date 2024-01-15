@@ -42,6 +42,11 @@ public class ExpenseController {
         return ResponseEntity.ok(AddExpenseResponse.builder().id(expenseId).build());
     }
 
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Expense> getAllExpenses() {
+        return expenseService.getAllExpenses();
+    }
+
     @GetMapping(value = "/{expenseId}", produces = MediaType.APPLICATION_JSON_VALUE)
     Expense searchUser(@PathVariable final String expenseId) {
         return expenseService.searchExpense(expenseId);

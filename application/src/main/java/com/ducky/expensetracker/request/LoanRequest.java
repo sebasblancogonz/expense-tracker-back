@@ -29,4 +29,7 @@ public class LoanRequest {
     @NotNull(message = "The loan interest is mandatory")
     private BigDecimal interest;
 
+    @NotNull(message = "The total amount is mandatory")
+    private BigDecimal totalAmount;
+
 }

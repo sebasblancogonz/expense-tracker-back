@@ -13,7 +13,7 @@ public class Expense {
     private String description;
     private BigDecimal amount;
     private ExpenseCategory category;
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate paymentDate;
 
     public Expense() {

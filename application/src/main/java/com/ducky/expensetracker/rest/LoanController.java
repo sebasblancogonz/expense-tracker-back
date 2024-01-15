@@ -34,20 +34,24 @@ public class LoanController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<AddLoanResponse> addLoan(@RequestBody final LoanRequest loanRequest) {
-        final String loanId = loanService.addLoan(loanRequest.getLoan());
+        Loan loan = new Loan(loanRequest.getDescription(), loanRequest.getStartDate(), loanRequest.getFinishDate(), loanRequest.getInterest(), loanRequest.getTotalAmount());
+        final String loanId = loanService.addLoan(loan);
         return ResponseEntity.ok(AddLoanResponse.builder().id(loanId).build());
     }
 
     @PostMapping(path = "/bulk", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<AddLoansResponse> addLoans(@RequestBody final LoansRequest loansRequest) {
-        final List<String> loanIds = loanService.addLoans(loansRequest.getLoans());
-        return ResponseEntity.ok(AddLoansResponse.builder().ids(loanIds).build());
+        /*final List<String> loanIds = loanService.addLoans(loansRequest.getLoans());
+        return ResponseEntity.ok(AddLoansResponse.builder().ids(loanIds).build());*/
+        return null;
     }
 
     @PatchMapping(path = "/{loanId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ModifyLoanResponse> modifyLoan(@RequestBody final LoanRequest loanRequest,
                                                          @PathVariable final String loanId) {
-        final Loan updatedLoan = loanService.updateLoan(loanRequest.getLoan(),
+        Loan loan = new Loan(loanRequest.getDescription(), loanRequest.getStartDate(), loanRequest.getFinishDate(), loanRequest.getInterest(), loanRequest.getTotalAmount());
+
+        final Loan updatedLoan = loanService.updateLoan(loan,
                 loanId);
         return ResponseEntity.ok(ModifyLoanResponse.builder().updatedLoan(updatedLoan).build());
     }
