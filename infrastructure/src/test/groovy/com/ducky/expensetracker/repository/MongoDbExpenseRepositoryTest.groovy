@@ -1,7 +1,8 @@
 package com.ducky.expensetracker.repository
 
+import com.ducky.expensetracker.entity.Expense
+import com.ducky.expensetracker.entity.Participant
 import com.ducky.expensetracker.mapper.ExpensesMapper
-import com.ducky.expensetracker.model.Expense
 import spock.lang.Specification
 
 import java.time.LocalDate
@@ -21,11 +22,11 @@ class MongoDbExpenseRepositoryTest extends Specification {
     def "SearchExpense"() {
         given: "An expense id"
         String expenseId = "1234567890"
-        Expense expectedExpense = buildExpenseRequest()
-        com.ducky.expensetracker.entity.Expense expenseEntity = buildExpenseEntity(expenseId)
+        com.ducky.expensetracker.model.Expense expectedExpense = buildExpenseRequest()
+        Expense expenseEntity = buildExpenseEntity(expenseId)
 
         when: "searching for an expense"
-        Expense expense = mongoDbExpenseRepository.searchExpense(expenseId)
+        com.ducky.expensetracker.model.Expense expense = mongoDbExpenseRepository.searchExpense(expenseId)
 
         then: "the expense is returned"
         1 * mongoExpenseRepository.findById(expenseId) >> Optional.of(expenseEntity)
@@ -34,15 +35,16 @@ class MongoDbExpenseRepositoryTest extends Specification {
         and: "the expense has the expected values"
         assert expense.description == expectedExpense.description
         assert expense.amount == expectedExpense.amount
-        assert expense.paymentDate == expectedExpense.paymentDate
+        assert expense.date == expectedExpense.date
+        assert expense.participants == expectedExpense.participants
     }
 
     def "AddExpense"() {
         given:
         String expectedId = "1234567890"
-        Expense expenseRequest = buildExpenseRequest()
-        Expense expenseWithRemainingData = expenseRequest
-        com.ducky.expensetracker.entity.Expense expenseEntity = buildExpenseEntity(expectedId)
+        com.ducky.expensetracker.model.Expense expenseRequest = buildExpenseRequest()
+        com.ducky.expensetracker.model.Expense expenseWithRemainingData = expenseRequest
+        Expense expenseEntity = buildExpenseEntity(expectedId)
 
         when:
         String expenseId = mongoDbExpenseRepository.addExpense(expenseRequest)
@@ -55,7 +57,7 @@ class MongoDbExpenseRepositoryTest extends Specification {
 
     def "ModifyExpense"() {
         given:
-        Expense expenseRequest = buildExpenseRequest()
+        com.ducky.expensetracker.model.Expense expenseRequest = buildExpenseRequest()
 
         when:
         String expenseId = mongoDbExpenseRepository.modifyExpense(expenseRequest)
@@ -65,19 +67,23 @@ class MongoDbExpenseRepositoryTest extends Specification {
     }
 
     def buildExpenseRequest() {
-        Expense expense = new Expense()
+        com.ducky.expensetracker.model.Expense expense = new com.ducky.expensetracker.model.Expense()
         expense.description = "Test Expense"
         expense.amount = 1000
-        expense.paymentDate = LocalDate.of(2023, 1, 1)
+        expense.date = LocalDate.of(2023, 1, 1)
+        expense.participants = [new com.ducky.expensetracker.model.Participant(name: "test", amount: BigDecimal.TEN),
+                                new com.ducky.expensetracker.model.Participant(name: "test2", amount: BigDecimal.TEN)]
         return expense
     }
 
     def buildExpenseEntity(String expenseId) {
-        com.ducky.expensetracker.entity.Expense expenseEntity = new com.ducky.expensetracker.entity.Expense()
+        Expense expenseEntity = new Expense()
         expenseEntity.id = expenseId
         expenseEntity.description = "Test Expense"
         expenseEntity.amount = 1000
-        expenseEntity.paymentDate = LocalDate.of(2023, 1, 1)
+        expenseEntity.date = LocalDate.of(2023, 1, 1)
+        expenseEntity.participants = [new Participant(name: "test", amount: BigDecimal.TEN),
+                                      new Participant(name: "test2", amount: BigDecimal.TEN)]
         return expenseEntity
     }
 

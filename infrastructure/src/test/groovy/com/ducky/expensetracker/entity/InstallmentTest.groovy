@@ -18,8 +18,15 @@ class InstallmentTest extends Specification {
 
 
         when:
-        def installment = new Installment(date, remainingInstallments, interest, amount, totalRedeemed,
-                remainingAmount, redeemed)
+        def installment = new Installment()
+        installment.date = date
+        installment.amount = amount
+        installment.interest = interest
+        installment.redeemed = redeemed
+        installment.totalRedeemed = totalRedeemed
+        installment.remainingAmount = remainingAmount
+        installment.remainingInstallments = remainingInstallments
+
 
         then:
         assert installment.date == date

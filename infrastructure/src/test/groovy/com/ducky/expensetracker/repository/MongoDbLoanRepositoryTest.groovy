@@ -61,7 +61,7 @@ class MongoDbLoanRepositoryTest extends Specification {
     def "AddLoan"() {
         given: "A loan"
         Loan loanRequest = buildLoanRequest()
-        com.ducky.expensetracker.entity.Loan loanEntity = buildLoanEntity()
+        com.ducky.expensetracker.entity.Loan loanEntity = buildLoanEntity(null)
         String expectedId = "1234567890"
 
         when: "adding a loan"

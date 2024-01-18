@@ -17,11 +17,10 @@ class LoanTest extends Specification {
         def monthlyAmount = 10.0
         def totalRedeemed = 0.0
         def remainingInstallments = 1
-        def installments = [new Installment(startDate, remainingInstallments, interest, monthlyAmount, totalRedeemed,
-                totalAmount, totalRedeemed)]
+        def installments = buildInstalmments()
 
         when:
-        def loan = new Loan(startDate, finishDate, interest, monthlyAmount, description, totalAmount, interestTotalAmount, installments)
+        def loan = new Loan(startDate, finishDate, interest, monthlyAmount, description, totalAmount, interestTotalAmount, buildInstalmments())
 
         then:
         assert loan.description == description
@@ -32,6 +31,25 @@ class LoanTest extends Specification {
         assert loan.interestTotalAmount == interestTotalAmount
         assert loan.monthlyAmount == monthlyAmount
         assert loan.installments == installments
+    }
+
+    def buildInstalmments() {
+        [Installment.builder()
+                 .date(LocalDate.of(2020, 1, 1))
+                 .amount(BigDecimal.TEN)
+                 .interest(BigDecimal.ONE)
+                 .redeemed(BigDecimal.ZERO)
+                 .totalRedeemed(BigDecimal.ZERO)
+                 .remainingAmount(BigDecimal.TEN)
+                 .remainingInstallments(1).build(),
+         Installment.builder()
+                 .date(LocalDate.of(2020, 1, 1))
+                 .amount(BigDecimal.TEN)
+                 .interest(BigDecimal.ONE)
+                 .redeemed(BigDecimal.ZERO)
+                 .totalRedeemed(BigDecimal.ZERO)
+                 .remainingAmount(BigDecimal.TEN)
+                 .remainingInstallments(1).build()]
     }
 
 }
