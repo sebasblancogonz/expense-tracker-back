@@ -13,8 +13,8 @@ public interface MongoExpenseRepository extends MongoRepository<Expense, String>
 
     Expense findByDescription(String description);
 
-    List<Expense> findAllByPaymentDateBetween(LocalDate startDate, LocalDate endDate);
+    List<Expense> findAllByDateBetween(LocalDate startDate, LocalDate endDate);
 
-    List<Expense> findAllByPaymentDateBetweenAndCategory(LocalDate startDate, LocalDate endDate, ExpenseCategory category);
+    List<Expense> findAllByDateBetweenAndCategory(LocalDate startDate, LocalDate endDate, ExpenseCategory category);
 
 }

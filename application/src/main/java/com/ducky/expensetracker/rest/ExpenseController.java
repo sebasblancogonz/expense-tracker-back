@@ -30,15 +30,15 @@ public class ExpenseController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<AddExpenseResponse> addExpense(@RequestBody final ExpenseRequest expenseRequest) {
-        final String expenseId = expenseService.addExpense(expenseRequest.getExpense());
+        final Expense expense = new Expense(expenseRequest.getDescription(), expenseRequest.getAmount(), expenseRequest.getDate(), expenseRequest.getCategory(), expenseRequest.getParticipants());
+        final String expenseId = expenseService.addExpense(expense);
        return ResponseEntity.ok(AddExpenseResponse.builder().id(expenseId).build());
     }
 
     @PostMapping(value = "/today", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<AddExpenseResponse> addExpenseForToday(@RequestBody final ExpenseRequest expenseRequest) {
-        final Expense expense = expenseRequest.getExpense();
-        expense.setPaymentDate(LocalDate.now());
-        final String expenseId = expenseService.addExpense(expenseRequest.getExpense());
+        final Expense expense = new Expense(expenseRequest.getDescription(), expenseRequest.getAmount(), LocalDate.now(), expenseRequest.getCategory(), expenseRequest.getParticipants());
+        final String expenseId = expenseService.addExpense(expense);
         return ResponseEntity.ok(AddExpenseResponse.builder().id(expenseId).build());
     }
 

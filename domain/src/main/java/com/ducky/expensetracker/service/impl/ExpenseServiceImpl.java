@@ -7,6 +7,7 @@ import com.ducky.expensetracker.service.ExpenseService;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -21,6 +22,11 @@ public final class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public String addExpense(Expense expense) {
+        // Check if the expense has participants, if it has participants, then share the expense amount between them
+        if (expense.getParticipants() != null && !expense.getParticipants().isEmpty()) {
+            BigDecimal amountPerParticipant = expense.getAmount().divide(BigDecimal.valueOf(expense.getParticipants().size()), RoundingMode.HALF_EVEN);
+            expense.getParticipants().forEach(participant -> participant.setAmount(amountPerParticipant));
+        }
         return expenseRepository.addExpense(expense);
     }
 

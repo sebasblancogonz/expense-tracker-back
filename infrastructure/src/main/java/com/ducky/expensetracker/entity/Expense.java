@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Document("expenses")
@@ -17,15 +18,17 @@ public class Expense {
     private String id;
     private String description;
     private BigDecimal amount;
-    private LocalDate paymentDate;
+    private LocalDate date;
     private ExpenseCategory category;
+    private List<Participant> participants;
 
 
-    public Expense(String description, BigDecimal amount, LocalDate paymentDate) {
+    public Expense(String description, BigDecimal amount, LocalDate date, List<Participant> participants) {
         super();
         this.description = description;
         this.amount = amount;
-        this.paymentDate = paymentDate;
+        this.date = date;
+        this.participants = participants;
     }
 
 }

@@ -21,17 +21,4 @@ public class Installment {
     private BigDecimal remainingAmount;
     private Integer remainingInstallments;
 
-    public Installment(LocalDate date, Integer remainingInstallments,
-                       BigDecimal interest, BigDecimal amount,
-                       BigDecimal totalRedeemed, BigDecimal remainingAmount, BigDecimal redeemed) {
-        super();
-        this.date = date;
-        this.remainingInstallments = remainingInstallments;
-        this.interest = interest;
-        this.amount = amount;
-        this.redeemed = redeemed;
-        this.totalRedeemed = totalRedeemed;
-        this.remainingAmount = remainingAmount;
-    }
-
 }

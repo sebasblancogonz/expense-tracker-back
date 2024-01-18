@@ -47,14 +47,14 @@ public class MongoDbExpenseRepository implements ExpenseRepository {
 
     @Override
     public List<Expense> searchAllExpensesBetweenDates(LocalDate startDate, LocalDate endDate) {
-        List<com.ducky.expensetracker.entity.Expense> expenses = repository.findAllByPaymentDateBetween(startDate, endDate);
+        List<com.ducky.expensetracker.entity.Expense> expenses = repository.findAllByDateBetween(startDate, endDate);
         return expensesMapper.toModelList(expenses);
     }
 
     @Override
     public List<Expense> searchAllExpensesBetweenDatesByCategory(LocalDate startDate, LocalDate endDate, ExpenseCategory category) {
         com.ducky.expensetracker.entity.ExpenseCategory expenseCategory = com.ducky.expensetracker.entity.ExpenseCategory.valueOf(category.name());
-        List<com.ducky.expensetracker.entity.Expense> expenses = repository.findAllByPaymentDateBetweenAndCategory(startDate, endDate, expenseCategory);
+        List<com.ducky.expensetracker.entity.Expense> expenses = repository.findAllByDateBetweenAndCategory(startDate, endDate, expenseCategory);
         return expensesMapper.toModelList(expenses);
     }
 

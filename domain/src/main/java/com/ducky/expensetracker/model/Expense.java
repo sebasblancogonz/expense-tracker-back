@@ -14,17 +14,19 @@ public class Expense {
     private BigDecimal amount;
     private ExpenseCategory category;
     @JsonFormat(pattern = "MM/dd/yyyy")
-    private LocalDate paymentDate;
+    private LocalDate date;
+    List<Participant> participants;
 
     public Expense() {
 
     }
 
-    public Expense(String description, BigDecimal amount, LocalDate paymentDate, ExpenseCategory category) {
+    public Expense(String description, BigDecimal amount, LocalDate date, ExpenseCategory category, List<Participant> participants) {
         this.description = description;
         this.amount = amount;
-        this.paymentDate = paymentDate;
+        this.date = date;
         this.category = category;
+        this.participants = participants;
     }
 
     public String getDescription() {
@@ -43,12 +45,12 @@ public class Expense {
         this.amount = amount;
     }
 
-    public LocalDate getPaymentDate() {
-        return paymentDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setPaymentDate(LocalDate paymentDate) {
-        this.paymentDate = paymentDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public ExpenseCategory getCategory() {
@@ -57,6 +59,14 @@ public class Expense {
 
     public void setCategory(ExpenseCategory category) {
         this.category = category;
+    }
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
     }
 
 }
