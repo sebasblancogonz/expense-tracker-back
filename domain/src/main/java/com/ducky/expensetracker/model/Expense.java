@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Expense {
 
+    private String id;
     private String description;
     private BigDecimal amount;
     private ExpenseCategory category;
@@ -27,6 +28,23 @@ public class Expense {
         this.date = date;
         this.category = category;
         this.participants = participants;
+    }
+
+    public Expense(String id, String description, BigDecimal amount, LocalDate date, ExpenseCategory category, List<Participant> participants) {
+        this.id = id;
+        this.description = description;
+        this.amount = amount;
+        this.date = date;
+        this.category = category;
+        this.participants = participants;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {

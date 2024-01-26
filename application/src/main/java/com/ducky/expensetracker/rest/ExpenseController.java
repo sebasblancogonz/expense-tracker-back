@@ -7,12 +7,7 @@ import com.ducky.expensetracker.response.GetExpensesResponse;
 import com.ducky.expensetracker.service.ExpenseService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/expenses")
+@CrossOrigin(origins = "*")
 public class ExpenseController {
 
     private final ExpenseService expenseService;
@@ -50,6 +46,11 @@ public class ExpenseController {
     @GetMapping(value = "/{expenseId}", produces = MediaType.APPLICATION_JSON_VALUE)
     Expense searchUser(@PathVariable final String expenseId) {
         return expenseService.searchExpense(expenseId);
+    }
+
+    @DeleteMapping(value = "/{expenseId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    void removeExpense(@PathVariable final String expenseId) {
+        expenseService.removeExpense(expenseId);
     }
 
     @GetMapping(value = "/total-current-month", produces = MediaType.APPLICATION_JSON_VALUE)

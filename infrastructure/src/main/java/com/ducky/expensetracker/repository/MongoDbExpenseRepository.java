@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Component
 @Primary
+
 public class MongoDbExpenseRepository implements ExpenseRepository {
 
     private final MongoExpenseRepository repository;
@@ -27,6 +28,11 @@ public class MongoDbExpenseRepository implements ExpenseRepository {
     public Expense searchExpense(String expenseId) {
         Optional<com.ducky.expensetracker.entity.Expense> userEntity = repository.findById(expenseId);
         return userEntity.map(expensesMapper::toModel).orElse(null);
+    }
+
+    @Override
+    public void removeExpense(String expenseId) {
+        repository.deleteById(expenseId);
     }
 
     @Override

@@ -10,6 +10,8 @@ public interface ExpenseRepository {
 
     Expense searchExpense(String expenseId);
 
+    void removeExpense(String expenseId);
+
     List<Expense> getAllExpenses();
 
     String addExpense(Expense expense);

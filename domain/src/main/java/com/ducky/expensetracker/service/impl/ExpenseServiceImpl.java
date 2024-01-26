@@ -41,6 +41,11 @@ public final class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
+    public void removeExpense(String expenseId) {
+         expenseRepository.removeExpense(expenseId);
+    }
+
+    @Override
     public Expense updateExpense(Expense expense) {
         return null;
     }

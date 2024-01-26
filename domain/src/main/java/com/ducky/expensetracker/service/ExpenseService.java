@@ -9,6 +9,8 @@ public interface ExpenseService {
 
     String addExpense(Expense expense);
 
+    void removeExpense(String expenseId);
+
     List<Expense> getAllExpenses();
 
     Expense searchExpense(String userId);
