@@ -36,7 +36,7 @@ class ExpensesMapperTest extends Specification {
         then:
         assert result.amount == expenses.amount
         assert result.description == expenses.description
-        assert result.paymentDate == expenses.paymentDate
+        assert result.date == expenses.date
     }
 
     def "ToModelList"() {
@@ -50,14 +50,14 @@ class ExpensesMapperTest extends Specification {
         assert result.size() == 1
         assert result[0].amount == expenses[0].amount
         assert result[0].description == expenses[0].description
-        assert result[0].paymentDate == expenses[0].paymentDate
+        assert result[0].date == expenses[0].date
     }
 
     def buildExpenseModel() {
         Expense expense = new Expense()
         expense.amount = 100
         expense.description = "Test"
-        expense.paymentDate = LocalDate.of(2020, 1, 1)
+        expense.date = LocalDate.of(2020, 1, 1)
         return expense
     }
 
@@ -66,7 +66,7 @@ class ExpensesMapperTest extends Specification {
         expense.id = 1
         expense.amount = 100
         expense.description = "Test"
-        expense.paymentDate = LocalDate.of(2020, 1, 1)
+        expense.date = LocalDate.of(2020, 1, 1)
         return expense
     }
 
