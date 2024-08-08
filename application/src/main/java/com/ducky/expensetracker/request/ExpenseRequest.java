@@ -25,9 +25,10 @@ public class ExpenseRequest {
     private BigDecimal amount;
     @NotNull(message = "Provide a valid expense category")
     private ExpenseCategory category;
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @NotNull(message = "Provide a valid expense date")
     private LocalDate date;
+    private boolean recurring;
     private List<Participant> participants;
 
 }

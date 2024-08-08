@@ -14,7 +14,7 @@ public class Expense {
     private String description;
     private BigDecimal amount;
     private ExpenseCategory category;
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate date;
     List<Participant> participants;
 
