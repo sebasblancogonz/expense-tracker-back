@@ -55,6 +55,11 @@ public final class LoanServiceImpl implements LoanService {
         return loanRepository.updateLoan(loan, loanId);
     }
 
+    @Override
+    public void removeLoan(String loanId) {
+        loanRepository.removeLoan(loanId);
+    }
+
     private BigDecimal calculateMonthlyTotal() {
         return scaleTo2Decimals(loanRepository.getAllLoans()
                 .stream()

@@ -32,4 +32,7 @@ public class LoanRequest {
     @NotNull(message = "The total amount is mandatory")
     private BigDecimal totalAmount;
 
+    @NotNull(message = "The loan entity is mandatory")
+    private String entity;
+
 }

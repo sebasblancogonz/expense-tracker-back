@@ -112,6 +112,17 @@ class LoanServiceImplTest extends Specification {
 
     }
 
+    def "DeleteLoan"() {
+        given: "A loan id"
+        String loanId = "1234567890"
+
+        when: "DeleteLoan is called"
+        loanService.removeLoan(loanId)
+
+        then: "LoanRepository.deleteLoan is called"
+        1 * loanRepository.removeLoan(loanId)
+    }
+
     def buildLoanRequest() {
         Loan loan = new Loan()
         loan.setTotalAmount(1000.00)

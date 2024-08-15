@@ -10,6 +10,7 @@ public class Loan {
 
     private String id;
     private String description;
+    private String entity;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate startDate;
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -25,9 +26,10 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(String id, String description, LocalDate startDate, LocalDate finishDate, BigDecimal interest, BigDecimal totalAmount, BigDecimal interestTotalAmount, BigDecimal monthlyAmount, BigDecimal totalRedeemed, Integer remainingInstallments, List<Installment> installments) {
+    public Loan(String id, String entity, String description, LocalDate startDate, LocalDate finishDate, BigDecimal interest, BigDecimal totalAmount, BigDecimal interestTotalAmount, BigDecimal monthlyAmount, BigDecimal totalRedeemed, Integer remainingInstallments, List<Installment> installments) {
         this.id = id;
         this.description = description;
+        this.entity = entity;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.interest = interest;
@@ -39,8 +41,9 @@ public class Loan {
         this.installments = installments;
     }
 
-    public Loan(String description, LocalDate startDate, LocalDate finishDate, BigDecimal interest, BigDecimal totalAmount) {
+    public Loan(String description, String entity, LocalDate startDate, LocalDate finishDate, BigDecimal interest, BigDecimal totalAmount) {
         this.description = description;
+        this.entity = entity;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.interest = interest;
@@ -53,6 +56,14 @@ public class Loan {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getEntity() {
+        return entity;
+    }
+
+    public void setEntity(String entity) {
+        this.entity = entity;
     }
 
     public BigDecimal getInterest() {

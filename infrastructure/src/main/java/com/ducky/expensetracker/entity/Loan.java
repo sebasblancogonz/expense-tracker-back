@@ -17,6 +17,7 @@ public class Loan {
 
     private String id;
     private String description;
+    private String entity;
     private LocalDate startDate;
     private LocalDate finishDate;
     private BigDecimal interest;
@@ -29,6 +30,7 @@ public class Loan {
 
     public Loan(LocalDate startDate, LocalDate finishDate,
                 BigDecimal interest, BigDecimal monthlyAmount, String description,
+                String entity,
                 BigDecimal totalAmount, BigDecimal interestTotalAmount, List<Installment> installments) {
         super();
         this.description = description;
@@ -37,6 +39,7 @@ public class Loan {
         this.interest = interest;
         this.monthlyAmount = monthlyAmount;
         this.totalAmount = totalAmount;
+        this.entity = entity;
         this.interestTotalAmount = interestTotalAmount;
         this.installments = installments;
     }

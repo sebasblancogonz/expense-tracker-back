@@ -1,6 +1,5 @@
 package com.ducky.expensetracker.repository;
 
-import com.ducky.expensetracker.model.Installment;
 import com.ducky.expensetracker.model.Loan;
 
 import java.util.List;
@@ -16,5 +15,7 @@ public interface LoanRepository {
     List<String> addLoans(List<Loan> loans);
 
     Loan updateLoan(Loan loan, String loanId);
+
+    void removeLoan(String loanId);
 
 }

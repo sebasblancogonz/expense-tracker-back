@@ -57,6 +57,11 @@ public class MongoDbLoanRepository implements LoanRepository {
         return updatedLoan.map(repository::save).map(loansMapper::toModel).orElse(null);
     }
 
+    @Override
+    public void removeLoan(String loanId) {
+        repository.deleteById(loanId);
+    }
+
 
     private static Optional<Loan> updateLoan(Loan newLoan, Optional<Loan> oldLoan) {
         return oldLoan.map(loan -> {

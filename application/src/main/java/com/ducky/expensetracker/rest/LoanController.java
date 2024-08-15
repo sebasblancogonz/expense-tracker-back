@@ -10,6 +10,7 @@ import com.ducky.expensetracker.service.LoanService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class LoanController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<AddLoanResponse> addLoan(@RequestBody final LoanRequest loanRequest) {
-        Loan loan = new Loan(loanRequest.getDescription(), loanRequest.getStartDate(), loanRequest.getFinishDate(), loanRequest.getInterest(), loanRequest.getTotalAmount());
+        Loan loan = new Loan(loanRequest.getDescription(), loanRequest.getEntity(), loanRequest.getStartDate(), loanRequest.getFinishDate(), loanRequest.getInterest(), loanRequest.getTotalAmount());
         final String loanId = loanService.addLoan(loan);
         return ResponseEntity.ok(AddLoanResponse.builder().id(loanId).build());
     }
@@ -49,7 +50,7 @@ public class LoanController {
     @PatchMapping(path = "/{loanId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ModifyLoanResponse> modifyLoan(@RequestBody final LoanRequest loanRequest,
                                                          @PathVariable final String loanId) {
-        Loan loan = new Loan(loanRequest.getDescription(), loanRequest.getStartDate(), loanRequest.getFinishDate(), loanRequest.getInterest(), loanRequest.getTotalAmount());
+        Loan loan = new Loan(loanRequest.getDescription(), loanRequest.getEntity(), loanRequest.getStartDate(), loanRequest.getFinishDate(), loanRequest.getInterest(), loanRequest.getTotalAmount());
 
         final Loan updatedLoan = loanService.updateLoan(loan,
                 loanId);
@@ -69,6 +70,11 @@ public class LoanController {
     @GetMapping(path = "/total/monthly", produces = MediaType.APPLICATION_JSON_VALUE)
     BigDecimal getMonthlyTotal() {
         return loanService.getMonthlyTotal();
+    }
+
+    @DeleteMapping(value = "/{loanId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    void removeLoan(@PathVariable final String loanId) {
+        loanService.removeLoan(loanId);
     }
 
 }

@@ -19,4 +19,6 @@ public interface LoanService {
 
     Loan updateLoan(Loan loan, String installmentId);
 
+    void removeLoan(String loanId);
+
 }

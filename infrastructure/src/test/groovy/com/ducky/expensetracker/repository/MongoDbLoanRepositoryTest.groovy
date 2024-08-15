@@ -113,6 +113,17 @@ class MongoDbLoanRepositoryTest extends Specification {
         assert updatedLoan.getInstallments() == loanRequest.getInstallments()
     }
 
+    def "DeleteLoan"() {
+        given: "A loan id"
+        String loanId = "1234567890"
+
+        when: "deleting a loan"
+        mongoDbLoanRepository.removeLoan(loanId)
+
+        then: "the loan is deleted"
+        1 * mongoLoanRepository.deleteById(loanId)
+    }
+
     def buildLoanRequest() {
         Loan loanModel = new Loan()
         loanModel.setId("1234567890")
