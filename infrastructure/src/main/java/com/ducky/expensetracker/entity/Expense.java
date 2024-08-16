@@ -20,6 +20,7 @@ public class Expense {
     private BigDecimal amount;
     private LocalDate date;
     private ExpenseCategory category;
+    private RecurrentData recurrentData;
     private List<Participant> participants;
 
 

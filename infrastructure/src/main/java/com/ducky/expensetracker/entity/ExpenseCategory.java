@@ -6,6 +6,10 @@ public enum ExpenseCategory {
     ENTERTAINMENT,
     HEALTH,
     EDUCATION,
+    HOUSING,
+    UTILITIES,
+    CLOTHING,
+    INSURANCE,
     OTHERS;
 
 }

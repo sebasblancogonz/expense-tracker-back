@@ -2,12 +2,20 @@ package com.ducky.expensetracker.rest;
 
 import com.ducky.expensetracker.model.Expense;
 import com.ducky.expensetracker.request.ExpenseRequest;
+import com.ducky.expensetracker.request.RecurrentExpenseRequest;
 import com.ducky.expensetracker.response.AddExpenseResponse;
 import com.ducky.expensetracker.response.GetExpensesResponse;
 import com.ducky.expensetracker.service.ExpenseService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -34,6 +42,13 @@ public class ExpenseController {
     @PostMapping(value = "/today", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<AddExpenseResponse> addExpenseForToday(@RequestBody final ExpenseRequest expenseRequest) {
         final Expense expense = new Expense(expenseRequest.getDescription(), expenseRequest.getAmount(), LocalDate.now(), expenseRequest.getCategory(), expenseRequest.getParticipants());
+        final String expenseId = expenseService.addExpense(expense);
+        return ResponseEntity.ok(AddExpenseResponse.builder().id(expenseId).build());
+    }
+
+    @PostMapping(value = "/recurrent", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<AddExpenseResponse> addRecurrentExpense(@RequestBody final RecurrentExpenseRequest expenseRequest) {
+        final Expense expense = new Expense(expenseRequest.getDescription(), expenseRequest.getAmount(), expenseRequest.getDayOfMonth(), expenseRequest.getCategory());
         final String expenseId = expenseService.addExpense(expense);
         return ResponseEntity.ok(AddExpenseResponse.builder().id(expenseId).build());
     }

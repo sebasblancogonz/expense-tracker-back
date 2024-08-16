@@ -16,10 +16,26 @@ public class Expense {
     private ExpenseCategory category;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate date;
+    private RecurrentData recurrentData;
     List<Participant> participants;
 
     public Expense() {
 
+    }
+
+    public Expense(String description, BigDecimal amount, Integer dayOfMonth, ExpenseCategory category) {
+        this.description = description;
+        this.amount = amount;
+        this.category = category;
+        this.recurrentData = new RecurrentData(dayOfMonth);
+    }
+
+    public Expense(String id, String description, BigDecimal amount, Integer dayOfMonth, ExpenseCategory category) {
+        this.id = id;
+        this.description = description;
+        this.amount = amount;
+        this.category = category;
+        this.recurrentData = new RecurrentData(dayOfMonth);
     }
 
     public Expense(String description, BigDecimal amount, LocalDate date, ExpenseCategory category, List<Participant> participants) {
@@ -77,6 +93,14 @@ public class Expense {
 
     public void setCategory(ExpenseCategory category) {
         this.category = category;
+    }
+
+    public RecurrentData getRecurrentData() {
+        return recurrentData;
+    }
+
+    public void setRecurrentData(RecurrentData recurrentData) {
+        this.recurrentData = recurrentData;
     }
 
     public List<Participant> getParticipants() {
